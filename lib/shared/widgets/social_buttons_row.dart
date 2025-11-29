@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tea_assignment/shared/widgets/social_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SocialButtonsRow extends StatelessWidget {
   const SocialButtonsRow({super.key});
@@ -25,18 +26,22 @@ class SocialButtonsRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SocialButton(
-              text: 'Login with Google',
-              icon: Icons.g_mobiledata,
-              iconColor: Colors.red,
-              onPressed: () {},
+            Expanded(
+              child: SocialButton(
+                text: 'Login with Google',
+                icon: Icons.g_mobiledata,
+                iconColor: Colors.red,
+                onPressed: () {},
+              ),
             ),
-            const SizedBox(width: 16),
-            SocialButton(
-              text: 'Login with Apple',
-              icon: Icons.apple,
-              iconColor: Colors.black,
-              onPressed: () {},
+            SizedBox(width: 16.w),
+            Expanded(
+              child: SocialButton(
+                text: 'Login with Apple',
+                icon: Icons.apple,
+                iconColor: Colors.black,
+                onPressed: () {},
+              ),
             ),
           ],
         ),

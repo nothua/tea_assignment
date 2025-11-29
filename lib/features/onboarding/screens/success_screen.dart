@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SuccessScreen extends StatelessWidget {
   final Widget? nextScreen;
@@ -56,23 +58,25 @@ class SuccessScreen extends StatelessWidget {
             
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        style: GoogleFonts.outfit(
+                          fontSize: 32.sp,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black87,
-                          fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 16),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        style: GoogleFonts.dmSans(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
                           color: Colors.grey[600],
                           height: 1.5,
                         ),

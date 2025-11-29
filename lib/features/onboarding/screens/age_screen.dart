@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
+import 'package:tea_assignment/features/onboarding/screens/role_screen.dart';
 
 class AgeScreen extends StatefulWidget {
   const AgeScreen({super.key});
@@ -20,13 +22,17 @@ class _AgeScreenState extends State<AgeScreen> {
   @override
   Widget build(BuildContext context) {
     return OnboardingLayout(
-      
       title: 'About Yourself',
       subtitle: 'Tell us your age',
+      text: "We tailor your experience based on this",
       progress: 0.15,
       backgroundImage: 'assets/images/illustrations/about_yourself_1.png',
       onContinue: () {
         if (_selectedAge != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RoleScreen()),
+          );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Please select your age')),
@@ -46,16 +52,16 @@ class _AgeScreenState extends State<AgeScreen> {
                   _selectedAge = age;
                 });
               },
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(AppDimensions.choiceChipRadius),
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                 decoration: BoxDecoration(
-                  color: isSelected ? const Color(0xFFF3F0FF) : Colors.grey.shade50,
-                  borderRadius: BorderRadius.circular(30),
+                  color: !isSelected ? const Color(0xFFF3F0FF) : Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(AppDimensions.choiceChipRadius),
                   border: Border.all(
                     color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
-                    width: isSelected ? 1.5 : 1,
+                    width: isSelected ? 1.5 : 1,  
                   ),
                 ),
                 child: Text(

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
@@ -48,8 +49,8 @@ class _MyHttpClientResponse implements HttpClientResponse {
   int get statusCode => 200;
   
   @override
-  Stream<List<int>> listen(void Function(List<int> event)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
-    return Stream.value(List<int>.from([0])); // Return empty bytes
+  StreamSubscription<List<int>> listen(void Function(List<int> event)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+    return Stream.value(List<int>.from([0])).listen(onData, onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 }
 
@@ -69,19 +70,14 @@ void main() {
   });
 
   testWidgets('Landing screen smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
     
-    // Pump frames to allow image loading attempts (which will be mocked)
     await tester.pumpAndSettle();
 
-    // Verify that the LandingScreen is displayed.
     expect(find.byType(LandingScreen), findsOneWidget);
     
-    // Verify that "Get Started" button is present.
     expect(find.text('Get Started'), findsOneWidget);
     
-    // Verify that "Turn everyday noise" text is present (partial match).
     expect(find.textContaining('Turn everyday noise'), findsOneWidget);
   });
 }

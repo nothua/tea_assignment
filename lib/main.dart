@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tea_assignment/core/theme/app_theme.dart';
 import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dart:io';
 import 'package:window_manager/window_manager.dart';
@@ -29,11 +30,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TEA Assignment',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      home: const LandingScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'TEA Assignment',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          home: const LandingScreen(),
+        );
+      },
     );
   }
 }

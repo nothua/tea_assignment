@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tea_assignment/features/auth/screens/create_account_screen.dart';
 import 'package:tea_assignment/features/auth/screens/login_screen.dart';
 import 'package:tea_assignment/shared/widgets/social_buttons_row.dart';
+import 'package:tea_assignment/shared/widgets/custom_button.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -29,9 +33,9 @@ class WelcomeScreen extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.1),
-                    Colors.black.withOpacity(0.4),
-                    const Color(0xFF2E2E3E),
+                    Colors.black.withOpacity(0.05),
+                    Colors.black.withOpacity(0.2),
+                    Colors.transparent,
                   ],
                 ),
               ),
@@ -41,113 +45,103 @@ class WelcomeScreen extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                const Spacer(flex: 2),
+                const Spacer(),
                 
                 Image.asset(
                   'assets/images/icons/tea_logo.png',
-                  width: 100,
-                  height: 100,
+                  width: 100.w,
+                  height: 100.h,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 
                 Text(
                   'Welcome To TĒA',
                   style: GoogleFonts.outfit(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 36.sp,
                     color: Colors.white,
                   ),
                 ),
                 
-                const Spacer(flex: 3),
+                SizedBox(height: 60.h),
                 
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(24.w),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AppColors.gradientStart,
+                          AppColors.gradientEnd,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.r),
+                        topRight: Radius.circular(50.r),
+                      ),
                     ),
-                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'Get Started',
                         style: GoogleFonts.outfit(
-                          fontSize: 24,
+                          fontSize: 24.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.black87,
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       
                       Center(
-                        child: SizedBox(
-                          width: 308,
-                          height: 48,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const LoginScreen()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: Text(
-                              'Login',
-                              style: GoogleFonts.outfit(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                        child: CustomButton(
+                          text: 'Login',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
+                          },
+                          width: AppDimensions.buttonWidth,
+                          height: AppDimensions.buttonHeight,
+                          backgroundColor: AppColors.loginButtonColor,
+                          textColor: Colors.white,
+                          shadowColor: AppColors.loginButtonColor.withOpacity(0.4),
+                          elevation: AppDimensions.buttonElevation,
+                          borderRadius: AppDimensions.buttonBorderRadius,
+                          hasBorder: true,
+                          borderColor: Colors.black,
+                          borderWidth: 0.1,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       
                       Center(
-                        child: SizedBox(
-                          width: 308,
-                          height: 48,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const CreateAccountScreen()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Theme.of(context).primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: Text(
-                              'Create Account',
-                              style: GoogleFonts.outfit(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                        child: CustomButton(
+                          text: 'Create Account',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const CreateAccountScreen()),
+                            );
+                          },
+                          width: AppDimensions.buttonWidth,
+                          height: AppDimensions.buttonHeight,
+                          backgroundColor: AppColors.createAccountButtonColor,
+                          textColor: AppColors.loginTextColor,
+                          shadowColor: AppColors.createAccountButtonColor.withOpacity(0.4),
+                          elevation: AppDimensions.buttonElevation,
+                          borderRadius: AppDimensions.buttonBorderRadius,
+                          hasBorder: true,
+                          borderColor: Colors.black,
+                          borderWidth: AppDimensions.buttonBorderWidth,
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       
                       const SocialButtonsRow(),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                   ),
                 ),
