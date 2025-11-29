@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/core/constants/app_dimensions.dart';
-import 'package:tea_assignment/features/auth/screens/create_account_screen.dart';
 import 'package:tea_assignment/features/onboarding/screens/productivity_screen.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
+import 'package:tea_assignment/shared/widgets/custom_choice_chip.dart';
 
 class RoleScreen extends StatefulWidget {
   const RoleScreen({super.key});
@@ -14,11 +15,21 @@ class RoleScreen extends StatefulWidget {
 class _RoleScreenState extends State<RoleScreen> {
   final List<String> _selectedRoles = [];
   final List<String> _roles = [
-    'Student', 'Employee', 'Freelancer',
-    'Parent', 'Dreamer', 'Nomad',
-    'Artist', 'Creator', 'Writer',
-    'Influencer', 'Analyst', 'Networker',
-    'Leader', 'Boss', 'Owner',
+    'Student',
+    'Employee',
+    'Freelancer',
+    'Parent',
+    'Dreamer',
+    'Nomad',
+    'Artist',
+    'Creator',
+    'Writer',
+    'Influencer',
+    'Analyst',
+    'Networker',
+    'Leader',
+    'Boss',
+    'Owner',
   ];
 
   @override
@@ -42,14 +53,14 @@ class _RoleScreenState extends State<RoleScreen> {
         }
       },
       child: Wrap(
-        spacing: 10,
-        runSpacing: 10,
+        spacing: AppDimensions.spacing10,
+        runSpacing: AppDimensions.spacing10,
         alignment: WrapAlignment.center,
         children: _roles.map((role) {
           final isSelected = _selectedRoles.contains(role);
-          return ChoiceChip(
-            label: Text(role),
-            selected: isSelected,
+          return CustomChoiceChip(
+            label: role,
+            isSelected: isSelected,
             onSelected: (selected) {
               setState(() {
                 if (selected) {
@@ -59,19 +70,19 @@ class _RoleScreenState extends State<RoleScreen> {
                 }
               });
             },
-            selectedColor: const Color(0xFFF3F0FF),
-            backgroundColor: Colors.white,
-            labelStyle: TextStyle(
-              color: isSelected ? Theme.of(context).primaryColor : Colors.black87,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            selectedColor: AppColors.sliderActive,
+            backgroundColor: AppColors.backgroundTransparent,
+            selectedLabelColor: AppColors.whiteColor,
+            unselectedLabelColor: AppColors.textBlack87,
+            selectedBorderColor: AppColors.sliderActive,
+            unselectedBorderColor: Colors.grey.shade300,
+            trailing: Icon(
+              isSelected ? Icons.remove : Icons.add,
+              size: AppDimensions.iconSize16,
+              color: isSelected
+                  ? Theme.of(context).primaryColor
+                  : AppColors.textBlack87,
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppDimensions.choiceChipRadius),
-              side: BorderSide(
-                color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
-              ),
-            ),
-            showCheckmark: false,
           );
         }).toList(),
       ),

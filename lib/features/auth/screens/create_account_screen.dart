@@ -30,10 +30,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: null,
-            colors: [
-              AppColors.gradientStart,
-              AppColors.gradientEnd,
-            ],
+            colors: [AppColors.gradientStart, AppColors.gradientEnd],
           ),
         ),
         child: SafeArea(
@@ -83,7 +80,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ],
                 ),
                 SizedBox(height: 40.h),
-                
+
                 Column(
                   children: [
                     const CustomTextField(
@@ -108,7 +105,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       isPassword: true,
                     ),
                     SizedBox(height: 24.h),
-                    
+
                     Row(
                       children: [
                         const Expanded(child: Divider()),
@@ -116,22 +113,22 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           child: Text(
                             'or continue with',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontSize: 12.sp
-                            ),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.copyWith(fontSize: 12.sp),
                           ),
                         ),
                         const Expanded(child: Divider()),
                       ],
                     ),
                     SizedBox(height: 24.h),
-                    
+
                     Row(
                       children: [
                         Expanded(
                           child: SocialButton(
                             text: 'Login with Google',
-                            icon: Icons.g_mobiledata, 
+                            icon: Icons.g_mobiledata,
                             iconColor: Colors.red,
                             onPressed: () {},
                           ),
@@ -150,7 +147,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ],
                 ),
                 SizedBox(height: 40.h),
-                
+
                 Column(
                   children: [
                     Center(
@@ -163,7 +160,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               builder: (context) => const SuccessScreen(
                                 nextScreen: AgeScreen(),
                                 title: 'We are glad that you\nare here.',
-                                subtitle: 'Get ready to fall in love with your life',
+                                subtitle:
+                                    'Get ready to fall in love with your life',
                               ),
                             ),
                           );
@@ -172,7 +170,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         height: AppDimensions.buttonHeight,
                         backgroundColor: AppColors.loginButtonColor,
                         textColor: Colors.white,
-                        shadowColor: AppColors.loginButtonColor.withOpacity(0.4),
+                        shadowColor: AppColors.createAccountButtonColor.withValues(
+                          alpha: 0.4,
+                        ),
                         elevation: AppDimensions.buttonElevation,
                         borderRadius: AppDimensions.buttonBorderRadius,
                         hasBorder: true,
@@ -197,7 +197,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()),
+                                builder: (context) => const LoginScreen(),
+                              ),
                             );
                           },
                           child: Text(

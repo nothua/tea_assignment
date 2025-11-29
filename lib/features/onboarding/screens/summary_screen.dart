@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/dashboard/screens/first_task_screen.dart';
 import 'package:tea_assignment/features/onboarding/screens/success_screen.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
 
 class SummaryScreen extends StatelessWidget {
   const SummaryScreen({super.key});
-    static const Color kBodyColor = Color(0xFF555555);
 
   @override
   Widget build(BuildContext context) {
@@ -28,56 +30,61 @@ class SummaryScreen extends StatelessWidget {
         );
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSection(
+            icon: Icons.school,
+            iconColor: AppColors.textSecondary,
+            title: 'Life Purpose',
+            content: Text(
+              'Student',
+              style: TextStyle(
+                fontFamily: 'DMSans',
+                fontSize: AppDimensions.fontSize15,
+                color: AppColors.textBody,
+              ),
+            ),
+          ),
+          SizedBox(height: AppDimensions.spacing24),
+          _buildSection(
+            icon: Icons.bed_rounded,
+            iconColor: AppColors.textGrey,
+            title: 'Sleep Patterns',
+            content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSection(
-                  icon: Icons.school,
-                  iconColor: const Color(0xFF2C2C2C), 
-                  title: 'Life Purpose',
-                  content: const Text(
-                    'Student',
-                    style: TextStyle(
-                      fontFamily: 'DMSans',
-                      fontSize: 15,
-                      color: kBodyColor,
-                    ),
-                  ),
+                _buildBulletPoint(
+                  'You typically sleep between 10:00 PM and 6:00 AM',
                 ),
-                
-                const SizedBox(height: 24),
-
-                _buildSection(
-                  icon: Icons.bed_rounded,
-                  iconColor: const Color(0xFF6B7280),
-                  title: 'Sleep Patterns',
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildBulletPoint('You typically sleep between 10:00 PM and 6:00 AM'),
-                      _buildBulletPoint('You average around 8 hours of rest each night'),
-                      _buildBulletPoint('You usually wake up between 10:00 PM and 6:00 AM'),
-                    ],
-                  ),
+                _buildBulletPoint(
+                  'You average around 8 hours of rest each night',
                 ),
-
-                const SizedBox(height: 24),
-
-                _buildSection(
-                  icon: Icons.star_rounded,
-                  iconColor: const Color(0xFFFFB800), 
-                  title: 'Interests & Decisions',
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildBulletPoint('You align your habits with your productivity cycles'),
-                      _buildBulletPoint('You\'re committed to improving your 30-day routine'),
-                    ],
-                  ),
+                _buildBulletPoint(
+                  'You usually wake up between 10:00 PM and 6:00 AM',
                 ),
               ],
             ),
-          
-        );
+          ),
+          SizedBox(height: AppDimensions.spacing24),
+          _buildSection(
+            icon: Icons.star_rounded,
+            iconColor: AppColors.iconYellow,
+            title: 'Interests & Decisions',
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildBulletPoint(
+                  'You align your habits with your productivity cycles',
+                ),
+                _buildBulletPoint(
+                  'You\'re committed to improving your 30-day routine',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSection({
@@ -89,26 +96,25 @@ class SummaryScreen extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Icon wrapper to align with text
         Padding(
-          padding: const EdgeInsets.only(top: 2.0),
-          child: Icon(icon, size: 22, color: iconColor),
+          padding: EdgeInsets.only(top: AppDimensions.padding2),
+          child: Icon(icon, size: AppDimensions.iconSize22, color: iconColor),
         ),
-        const SizedBox(width: 14),
+        SizedBox(width: AppDimensions.padding14),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Outfit',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                  color: Color(0xFF2C2C2C),
+                  fontSize: AppDimensions.fontSize16,
+                  color: AppColors.textSecondary,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: AppDimensions.spacing8),
               content,
             ],
           ),
@@ -119,27 +125,27 @@ class SummaryScreen extends StatelessWidget {
 
   Widget _buildBulletPoint(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: EdgeInsets.only(bottom: AppDimensions.spacing8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             '• ',
             style: TextStyle(
               fontFamily: 'DMSans',
-              fontSize: 15,
-              color: Color(0xFF555555),
+              fontSize: AppDimensions.fontSize15,
+              color: AppColors.textBody,
               height: 1.4,
             ),
           ),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'DMSans',
-                fontSize: 15,
-                color: Color(0xFF555555),
-                height: 1.4, 
+                fontSize: AppDimensions.fontSize15,
+                color: AppColors.textBody,
+                height: 1.4,
               ),
             ),
           ),

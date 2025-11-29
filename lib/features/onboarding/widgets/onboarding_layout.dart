@@ -13,6 +13,7 @@ class OnboardingLayout extends StatelessWidget {
   final VoidCallback onContinue;
   final double progress;
   final String? backgroundImage;
+  final String buttonText;
 
   const OnboardingLayout({
     super.key,
@@ -22,6 +23,7 @@ class OnboardingLayout extends StatelessWidget {
     required this.onContinue,
     required this.progress,
     this.text = "",
+    this.buttonText = "Continue",
     this.backgroundImage,
   });
 
@@ -53,8 +55,8 @@ class OnboardingLayout extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.3),
-                    Colors.black.withOpacity(0.1),
+                    Colors.black.withValues(alpha: 0.3),
+                    Colors.black.withValues(alpha: 0.1),
                   ],
                 ),
               ),
@@ -66,7 +68,10 @@ class OnboardingLayout extends StatelessWidget {
               children: [
                 SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimensions.headerHorizontalPadding, vertical: AppDimensions.headerVerticalPadding),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppDimensions.headerHorizontalPadding,
+                      vertical: AppDimensions.headerVerticalPadding,
+                    ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -109,10 +114,7 @@ class OnboardingLayout extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        AppColors.gradientStart,
-                        AppColors.gradientEnd,
-                      ],
+                      colors: [AppColors.gradientStart, AppColors.gradientEnd],
                     ),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
@@ -147,7 +149,7 @@ class OnboardingLayout extends StatelessWidget {
                       ),
                       SizedBox(height: AppDimensions.spacing5),
                       Text(
-                        text ?? "",
+                        text,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.dmSans(
                           fontSize: AppDimensions.bodyFontSize,
@@ -161,13 +163,15 @@ class OnboardingLayout extends StatelessWidget {
 
                       Center(
                         child: CustomButton(
-                          text: 'Continue',
+                          text: buttonText,
                           onPressed: onContinue,
                           width: AppDimensions.buttonWidth,
                           height: AppDimensions.buttonHeight,
                           backgroundColor: AppColors.loginButtonColor,
                           textColor: Colors.white,
-                          shadowColor: AppColors.loginButtonColor.withOpacity(0.4),
+                          shadowColor: AppColors.loginButtonColor.withValues(
+                            alpha: 0.4,
+                          ),
                           elevation: AppDimensions.buttonElevation,
                           borderRadius: AppDimensions.buttonBorderRadius,
                           hasBorder: true,

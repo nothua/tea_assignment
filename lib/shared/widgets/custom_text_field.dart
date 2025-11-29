@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -21,36 +23,39 @@ class CustomTextField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.black87,
+            fontSize: AppDimensions.textFieldLabelFontSize,
+            color: AppColors.textBlack87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: AppDimensions.spacing8),
         TextField(
           controller: controller,
           obscureText: isPassword,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: const TextStyle(color: AppColors.textBlack),
             filled: true,
-            fillColor: Colors.white,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            fillColor: AppColors.backgroundWhite,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: AppDimensions.textFieldHorizontalPadding,
+              vertical: AppDimensions.textFieldVerticalPadding,
+            ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(AppDimensions.textFieldBorderRadius),
+              borderSide: const BorderSide(color: AppColors.borderBlack),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(AppDimensions.textFieldBorderRadius),
+              borderSide: const BorderSide(color: AppColors.borderBlack),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(AppDimensions.textFieldBorderRadius),
+              borderSide: const BorderSide(color: AppColors.borderBlack),
             ),
             suffixIcon: isPassword
-                ? const Icon(Icons.visibility_outlined, color: Colors.black)
+                ? const Icon(Icons.visibility_outlined, color: AppColors.iconBlack)
                 : null,
           ),
         ),

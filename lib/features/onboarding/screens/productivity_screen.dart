@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
 import 'package:tea_assignment/features/onboarding/screens/energy_screen.dart';
 
@@ -12,10 +14,26 @@ class ProductivityScreen extends StatefulWidget {
 class _ProductivityScreenState extends State<ProductivityScreen> {
   String? _selectedTime;
   final List<Map<String, String>> _times = [
-    {'title': 'Morning Person', 'time': '5AM - 11AM', 'image': 'assets/images/illustrations/morning.png'},
-    {'title': 'Afternoon Focus', 'time': '11AM - 5PM', 'image': 'assets/images/illustrations/afternoon.png'},
-    {'title': 'Evening Burst', 'time': '5PM - 10PM', 'image': 'assets/images/illustrations/evening.png'},
-    {'title': 'Night Owl', 'time': '10PM - 4AM', 'image': 'assets/images/illustrations/night.png'},
+    {
+      'title': 'Morning Person',
+      'time': '5AM - 11AM',
+      'image': 'assets/images/illustrations/morning.png',
+    },
+    {
+      'title': 'Afternoon Focus',
+      'time': '11AM - 5PM',
+      'image': 'assets/images/illustrations/afternoon.png',
+    },
+    {
+      'title': 'Evening Burst',
+      'time': '5PM - 10PM',
+      'image': 'assets/images/illustrations/evening.png',
+    },
+    {
+      'title': 'Night Owl',
+      'time': '10PM - 4AM',
+      'image': 'assets/images/illustrations/night.png',
+    },
   ];
 
   @override
@@ -33,22 +51,22 @@ class _ProductivityScreenState extends State<ProductivityScreen> {
             MaterialPageRoute(builder: (context) => const EnergyScreen()),
           );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please select a time')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Please select a time')));
         }
       },
       child: Column(
         children: [
-          const SizedBox(height: 24),
+          SizedBox(height: AppDimensions.spacing24),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              childAspectRatio: 1.5,
+              crossAxisSpacing: AppDimensions.gridSpacing16,
+              mainAxisSpacing: AppDimensions.gridSpacing16,
+              childAspectRatio: AppDimensions.gridAspectRatio,
             ),
             itemCount: _times.length,
             itemBuilder: (context, index) {
@@ -60,35 +78,42 @@ class _ProductivityScreenState extends State<ProductivityScreen> {
                     _selectedTime = item['title'];
                   });
                 },
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AppDimensions.borderRadius16),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade700,
-                    borderRadius: BorderRadius.circular(16),
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(AppDimensions.borderRadius16),
                     image: DecorationImage(
-                       image: AssetImage(item['image']!),
-                       fit: BoxFit.cover,
-                       opacity: 0.6,
+                      image: AssetImage(item['image']!),
+                      fit: BoxFit.cover,
+                      opacity: 0.6,
                     ),
-                    border: isSelected ? Border.all(color: Theme.of(context).primaryColor, width: 3) : null,
+                    border: isSelected
+                        ? Border.all(
+                            color: Theme.of(context).primaryColor,
+                            width: AppDimensions.borderWidth3,
+                          )
+                        : null,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         item['title']!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: AppDimensions.fontSize14,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: AppDimensions.spacing4),
                       Text(
                         item['time']!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white70,
-                          fontSize: 12,
+                          fontSize: AppDimensions.fontSize12,
                         ),
                       ),
                     ],

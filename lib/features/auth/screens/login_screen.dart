@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, 
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: 1.sw,
         height: 1.sh,
@@ -32,15 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: null,
-            colors: [
-              AppColors.gradientStart,
-              AppColors.gradientEnd,
-            ],
+            colors: [AppColors.gradientStart, AppColors.gradientEnd],
           ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppDimensions.headerHorizontalPadding,
+              vertical: 0.h,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Column(
                       children: [
-                        SizedBox(height: 32.h),
+                        SizedBox(height: AppDimensions.spacing32),
                         Text(
                           'Welcome Back',
                           textAlign: TextAlign.center,
@@ -84,28 +84,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40.h),
+                SizedBox(height: AppDimensions.spacing40),
                 Column(
                   children: [
                     const CustomTextField(
                       label: 'Email',
                       hint: 'Enter your email',
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: AppDimensions.spacing20),
                     const CustomTextField(
                       label: 'Password',
                       hint: 'Enter your Password',
                       isPassword: true,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: AppDimensions.spacing16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
                             SizedBox(
-                              height: 24.w,
-                              width: 24.w,
+                              height: AppDimensions.checkboxSize,
+                              width: AppDimensions.checkboxSize,
                               child: Checkbox(
                                 value: _rememberMe,
                                 onChanged: (value) {
@@ -116,16 +116,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 shape: const CircleBorder(),
                                 side: BorderSide(
                                   color: Theme.of(context).primaryColor,
-                                  width: 1.5.w
+                                  width: AppDimensions.borderWidth1_5,
                                 ),
                                 activeColor: Theme.of(context).primaryColor,
                               ),
                             ),
-                            SizedBox(width: 8.w),
+                            SizedBox(width: AppDimensions.spacing8),
                             Text(
                               'Remember Me',
                               style: GoogleFonts.dmSans(
-                                fontSize: 12.sp,
+                                fontSize: AppDimensions.fontSize12,
                                 color: AppColors.subtitleTextColor,
                               ),
                             ),
@@ -134,11 +134,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Flexible(
                           child: TextButton(
                             onPressed: () {},
-                            style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                            ),
                             child: Text(
                               'Forgot your Password?',
                               style: GoogleFonts.dmSans(
-                                fontSize: 12.sp,
+                                fontSize: AppDimensions.fontSize12,
                                 color: AppColors.subtitleTextColor,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -147,11 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppDimensions.spacing30),
                     const SocialButtonsRow(),
                   ],
                 ),
-                SizedBox(height: 60.h),
+                SizedBox(height: AppDimensions.spacing65),
                 Column(
                   children: [
                     Center(
@@ -173,23 +175,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: AppDimensions.buttonWidth,
                         height: AppDimensions.buttonHeight,
                         backgroundColor: AppColors.loginButtonColor,
-                        textColor: Colors.white,
-                        shadowColor: AppColors.loginButtonColor.withOpacity(0.4),
+                        textColor: AppColors.whiteColor,
+                        shadowColor: AppColors.loginButtonColor.withValues(
+                          alpha: 0.4,
+                        ),
                         elevation: AppDimensions.buttonElevation,
                         borderRadius: AppDimensions.buttonBorderRadius,
                         hasBorder: true,
-                        borderColor: Colors.black,
+                        borderColor: AppColors.borderBlack,
                         borderWidth: AppDimensions.buttonBorderWidth,
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: AppDimensions.spacing16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Don't have an Account? ",
                           style: GoogleFonts.outfit(
-                            fontSize: 20.sp,
+                            fontSize: AppDimensions.buttonFontSize,
                             fontWeight: FontWeight.w500,
                             color: AppColors.loginTextColor,
                           ),
@@ -199,14 +203,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CreateAccountScreen()),
+                                builder: (context) =>
+                                    const CreateAccountScreen(),
+                              ),
                             );
                           },
                           child: Text(
                             "Sign Up",
                             style: GoogleFonts.outfit(
-                              fontSize: 20.sp,
+                              fontSize: AppDimensions.buttonFontSize,
                               fontWeight: FontWeight.w500,
                               color: AppColors.loginTextColor,
                             ),

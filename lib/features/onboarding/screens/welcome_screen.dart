@@ -33,8 +33,8 @@ class WelcomeScreen extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.05),
-                    Colors.black.withOpacity(0.2),
+                    Colors.black.withValues(alpha: 0.05),
+                    Colors.black.withValues(alpha: 0.2),
                     Colors.transparent,
                   ],
                 ),
@@ -45,25 +45,25 @@ class WelcomeScreen extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                const Spacer(),
-                
-                Image.asset(
-                  'assets/images/icons/tea_logo.png',
-                  width: 100.w,
-                  height: 100.h,
-                ),
-                SizedBox(height: 24.h),
-                
-                Text(
-                  'Welcome To TĒA',
-                  style: GoogleFonts.outfit(
-                    fontSize: 36.sp,
-                    color: Colors.white,
+                  const Spacer(),
+
+                  Image.asset(
+                    'assets/images/icons/tea_logo.png',
+                    width: 100.w,
+                    height: 100.h,
                   ),
-                ),
-                
-                SizedBox(height: 60.h),
-                
+                  SizedBox(height: 24.h),
+
+                  Text(
+                    'Welcome To TĒA',
+                    style: GoogleFonts.outfit(
+                      fontSize: 36.sp,
+                      color: Colors.white,
+                    ),
+                  ),
+
+                  SizedBox(height: 60.h),
+
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.all(24.w),
@@ -81,73 +81,81 @@ class WelcomeScreen extends StatelessWidget {
                         topRight: Radius.circular(50.r),
                       ),
                     ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Get Started',
-                        style: GoogleFonts.outfit(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black87,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Get Started',
+                          style: GoogleFonts.outfit(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 24.h),
-                      
-                      Center(
-                        child: CustomButton(
-                          text: 'Login',
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LoginScreen()),
-                            );
-                          },
-                          width: AppDimensions.buttonWidth,
-                          height: AppDimensions.buttonHeight,
-                          backgroundColor: AppColors.loginButtonColor,
-                          textColor: Colors.white,
-                          shadowColor: AppColors.loginButtonColor.withOpacity(0.4),
-                          elevation: AppDimensions.buttonElevation,
-                          borderRadius: AppDimensions.buttonBorderRadius,
-                          hasBorder: true,
-                          borderColor: Colors.black,
-                          borderWidth: 0.1,
+                        SizedBox(height: 24.h),
+
+                        Center(
+                          child: CustomButton(
+                            text: 'Login',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            },
+                            width: AppDimensions.buttonWidth,
+                            height: AppDimensions.buttonHeight,
+                            backgroundColor: AppColors.loginButtonColor,
+                            textColor: Colors.white,
+                            shadowColor: AppColors.loginButtonColor.withValues(
+                              alpha: 0.4,
+                            ),
+                            elevation: AppDimensions.buttonElevation,
+                            borderRadius: AppDimensions.buttonBorderRadius,
+                            hasBorder: true,
+                            borderColor: Colors.black,
+                            borderWidth: 0.1,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 16.h),
-                      
-                      Center(
-                        child: CustomButton(
-                          text: 'Create Account',
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const CreateAccountScreen()),
-                            );
-                          },
-                          width: AppDimensions.buttonWidth,
-                          height: AppDimensions.buttonHeight,
-                          backgroundColor: AppColors.createAccountButtonColor,
-                          textColor: AppColors.loginTextColor,
-                          shadowColor: AppColors.createAccountButtonColor.withOpacity(0.4),
-                          elevation: AppDimensions.buttonElevation,
-                          borderRadius: AppDimensions.buttonBorderRadius,
-                          hasBorder: true,
-                          borderColor: Colors.black,
-                          borderWidth: AppDimensions.buttonBorderWidth,
+                        SizedBox(height: 16.h),
+
+                        Center(
+                          child: CustomButton(
+                            text: 'Create Account',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CreateAccountScreen(),
+                                ),
+                              );
+                            },
+                            width: AppDimensions.buttonWidth,
+                            height: AppDimensions.buttonHeight,
+                            backgroundColor: AppColors.createAccountButtonColor,
+                            textColor: AppColors.loginTextColor,
+                            shadowColor: AppColors.createAccountButtonColor
+                                .withValues(alpha: 0.4),
+                            elevation: AppDimensions.buttonElevation,
+                            borderRadius: AppDimensions.buttonBorderRadius,
+                            hasBorder: true,
+                            borderColor: Colors.black,
+                            borderWidth: AppDimensions.buttonBorderWidth,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 24.h),
-                      
-                      const SocialButtonsRow(),
-                      SizedBox(height: 16.h),
-                    ],
+                        SizedBox(height: 24.h),
+
+                        const SocialButtonsRow(),
+                        SizedBox(height: 16.h),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           ),
         ],
       ),

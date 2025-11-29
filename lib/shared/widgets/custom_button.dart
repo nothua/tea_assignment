@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -48,22 +49,23 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
             backgroundColor: backgroundColor ?? Colors.white,
-            side: hasBorder 
+            side: hasBorder
                 ? BorderSide(
                     color: borderColor ?? Colors.black,
-                    width: borderWidth ?? 1.0,
+                    width: borderWidth ?? AppDimensions.borderWidth1,
                   )
                 : BorderSide.none,
             elevation: elevation ?? 2,
-            shadowColor: shadowColor ?? Colors.black.withOpacity(0.1),
+            shadowColor: shadowColor ?? Colors.black.withValues(alpha: 0.1),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
+              borderRadius: BorderRadius.circular(
+                  borderRadius ?? AppDimensions.buttonBorderRadius),
             ),
           ),
           child: Text(
             text,
             style: GoogleFonts.outfit(
-              fontSize: fontSize ?? 20.sp,
+              fontSize: fontSize ?? AppDimensions.buttonFontSize,
               fontWeight: fontWeight ?? FontWeight.w500,
               color: textColor,
             ),
@@ -83,11 +85,12 @@ class CustomButton extends StatelessWidget {
           shadowColor: shadowColor,
           elevation: elevation ?? 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
+            borderRadius: BorderRadius.circular(
+                borderRadius ?? AppDimensions.buttonBorderRadius),
             side: hasBorder
                 ? BorderSide(
                     color: borderColor ?? Colors.black,
-                    width: borderWidth ?? 1.0,
+                    width: borderWidth ?? AppDimensions.borderWidth1,
                   )
                 : BorderSide.none,
           ),
@@ -95,7 +98,7 @@ class CustomButton extends StatelessWidget {
         child: Text(
           text,
           style: GoogleFonts.outfit(
-            fontSize: fontSize ?? 20.sp,
+            fontSize: fontSize ?? AppDimensions.buttonFontSize,
             fontWeight: fontWeight ?? FontWeight.w500,
           ),
         ),

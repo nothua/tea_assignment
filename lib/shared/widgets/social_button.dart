@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class SocialButton extends StatelessWidget {
   final String text;
@@ -19,35 +20,35 @@ class SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 57.h,
+      height: AppDimensions.socialButtonHeight,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24.r),
+        color: AppColors.backgroundWhite,
+        borderRadius: BorderRadius.circular(AppDimensions.socialButtonBorderRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
+            color: AppColors.iconBlack.withValues(alpha: AppDimensions.socialButtonShadowOpacity),
+            blurRadius: AppDimensions.socialButtonBlurRadius,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(icon, color: iconColor, size: 28.sp), 
+        icon: Icon(icon, color: iconColor, size: AppDimensions.socialButtonIconSize),
         label: Text(
           text,
           style: GoogleFonts.outfit(
-            fontSize: 14.sp,
+            fontSize: AppDimensions.fontSize14,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: AppColors.textBlack87,
           ),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.black87,
-          shadowColor: Colors.transparent,
+          backgroundColor: AppColors.backgroundTransparent,
+          foregroundColor: AppColors.textBlack87,
+          shadowColor: AppColors.backgroundTransparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.r),
+            borderRadius: BorderRadius.circular(AppDimensions.socialButtonBorderRadius),
           ),
           elevation: 0,
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class SuccessScreen extends StatelessWidget {
   final Widget? nextScreen;
@@ -30,7 +32,7 @@ class SuccessScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundWhite,
       body: GestureDetector(
         onTap: () {
           if (onDismiss != null) {
@@ -55,10 +57,13 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppDimensions.headerHorizontalPadding,
+                  vertical: 0.h,
+                ),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -66,18 +71,18 @@ class SuccessScreen extends StatelessWidget {
                       Text(
                         title,
                         style: GoogleFonts.outfit(
-                          fontSize: 32.sp,
+                          fontSize: AppDimensions.titleFontSize,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black87,
+                          color: AppColors.textBlack87,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         subtitle,
                         style: GoogleFonts.dmSans(
-                          fontSize: 16.sp,
+                          fontSize: AppDimensions.fontSize16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.grey[600],
+                          color: AppColors.textGrey,
                           height: 1.5,
                         ),
                         textAlign: TextAlign.center,

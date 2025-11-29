@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
 import 'package:tea_assignment/features/onboarding/screens/role_screen.dart';
@@ -41,41 +43,56 @@ class _AgeScreenState extends State<AgeScreen> {
       },
       child: Column(
         children: [
-          const SizedBox(height: 24),
+          SizedBox(height: AppDimensions.spacing24),
           ..._ageRanges.map((age) {
-          final isSelected = _selectedAge == age;
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _selectedAge = age;
-                });
-              },
-              borderRadius: BorderRadius.circular(AppDimensions.choiceChipRadius),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                decoration: BoxDecoration(
-                  color: !isSelected ? const Color(0xFFF3F0FF) : Colors.grey.shade50,
-                  borderRadius: BorderRadius.circular(AppDimensions.choiceChipRadius),
-                  border: Border.all(
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
-                    width: isSelected ? 1.5 : 1,  
-                  ),
+            final isSelected = _selectedAge == age;
+            return Padding(
+              padding: EdgeInsets.only(bottom: AppDimensions.spacing12),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    _selectedAge = age;
+                  });
+                },
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.choiceChipRadius,
                 ),
-                child: Text(
-                  age,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.black87,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    vertical: AppDimensions.padding16,
+                    horizontal: AppDimensions.padding24,
+                  ),
+                  decoration: BoxDecoration(
+                    color: !isSelected
+                        ? AppColors.choiceChipBackground
+                        : Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.choiceChipRadius,
+                    ),
+                    border: Border.all(
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey.shade300,
+                      width: isSelected
+                          ? AppDimensions.borderWidth1_5
+                          : AppDimensions.borderWidth1,
+                    ),
+                  ),
+                  child: Text(
+                    age,
+                    style: TextStyle(
+                      fontSize: AppDimensions.fontSize16,
+                      fontWeight: FontWeight.w500,
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Colors.black87,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
         ],
       ),
     );
