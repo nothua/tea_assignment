@@ -23,7 +23,7 @@ class SummaryScreen extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => SuccessScreen(
               nextScreen: const FirstTaskScreen(),
-              title: 'Welcome to TEA',
+              title: 'Welcome to TĒA',
               subtitle: 'A Better You Is Closer Than You Think',
             ),
           ),

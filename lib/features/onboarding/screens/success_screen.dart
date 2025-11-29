@@ -13,7 +13,7 @@ class SuccessScreen extends StatelessWidget {
   const SuccessScreen({
     super.key,
     this.nextScreen,
-    this.title = 'Welcome to TEA',
+    this.title = 'Welcome to TĒA',
     this.subtitle = 'A Better You Is Closer Than You Think',
     this.onDismiss,
   });
