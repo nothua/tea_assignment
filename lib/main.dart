@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           title: 'TEA Assignment',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: const AddTaskScreen(),
+          home: const ActiveTaskScreen(),
         );
       },
     );
