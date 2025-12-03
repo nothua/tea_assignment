@@ -2,10 +2,6 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math' as math;
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SideSliderIndicator extends StatelessWidget {
   final String label;
@@ -17,6 +13,7 @@ class SideSliderIndicator extends StatelessWidget {
   final double sweepDegrees;
   final double textOffset;
   final double strokeWidth;
+  final bool enabled; 
 
   const SideSliderIndicator({
     super.key,
@@ -29,11 +26,11 @@ class SideSliderIndicator extends StatelessWidget {
     this.sweepDegrees = 54.0,
     this.textOffset = 11.0,
     this.strokeWidth = 6.0,
+    this.enabled = true, 
   });
 
   @override
   Widget build(BuildContext context) {
-    
     final center = Offset(size.width / 2, size.height / 2);
     final r = radius ?? (136.w + 22.5.w);
     final sweepRad = sweepDegrees * math.pi / 180.0;
@@ -52,12 +49,12 @@ class SideSliderIndicator extends StatelessWidget {
         -sweepRad,
       );
     }
-    
+
     final metrics = path.computeMetrics().first;
     final offset = metrics.length * value;
     final tangent = metrics.getTangentForOffset(offset);
     final iconPos = tangent?.position ?? center;
-    
+
     return IgnorePointer(
       child: SizedBox(
         width: size.width,
@@ -68,7 +65,7 @@ class SideSliderIndicator extends StatelessWidget {
               size: size,
               painter: _SideSliderPainter(
                 value: value,
-                color: color,
+                color: enabled ? color : color.withOpacity(0.5), 
                 path: path,
                 label: label,
                 isLeft: isLeft,
@@ -76,7 +73,6 @@ class SideSliderIndicator extends StatelessWidget {
                 strokeWidth: strokeWidth,
               ),
             ),
-            
             Positioned(
               top: iconPos.dy - 16.w,
               left: iconPos.dx - 16.w,
@@ -97,7 +93,8 @@ class SideSliderIndicator extends StatelessWidget {
                 child: Icon(
                   Icons.menu,
                   size: 16.sp,
-                  color: Colors.grey,
+                  
+                  color: enabled ? Colors.grey : Colors.grey.withOpacity(0.5),
                 ),
               ),
             ),

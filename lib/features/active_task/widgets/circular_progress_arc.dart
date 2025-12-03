@@ -171,7 +171,7 @@ class _CircularProgressPainter extends CustomPainter {
     canvas.rotate(-math.pi / 2);
 
     final double sweepAngle = progress * 2 * math.pi;
-
+  
     if (disabled) {
       final disabledPaint = Paint()
         ..style = PaintingStyle.stroke
