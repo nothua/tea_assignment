@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tea_assignment/core/theme/app_theme.dart';
 import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
+import 'package:tea_assignment/features/active_task/screens/active_task_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dart:io';
@@ -11,7 +12,7 @@ void main() async {
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(402, 874),
+      size: Size(393, 900),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(393, 900),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           title: 'TEA Assignment',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: const LandingScreen(),
+          home: const AddTaskScreen(),
         );
       },
     );

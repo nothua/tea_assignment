@@ -32,9 +32,43 @@ class AppColors {
   
   static const Color backgroundWhite = Colors.white;
   static const Color backgroundTransparent = Colors.transparent;
+  static const Color backgroundColor = Color(0xFFF3F4F6);
   
   static const Color borderBlack = Colors.black;
   static const Color borderGrey = Colors.grey;
   
   static const Color tickMarkWhite = Colors.white;
+  
+  static const Color timerGradientStart = Color(0xFFC4B5FD);
+  static const Color timerGradientEnd = Color(0xFF5B4DFF);
+  static const Color enjoymentColor = Color(0xFFFF6B6B);
+  static const Color purposeColor = Color(0xFF4D96FF);
+  static const Color distractionOpenBg = Color(0xFFFFE4E1);
+  static const Color distractionOpenText = Colors.red;
+  
+  static const Color timerProgressStart = Color(0xFF7C7AFF);
+  static const Color timerProgressEnd = Color(0xFF5856D6);
+  static const Color timerBackgroundGradientStart = Color(0xFF5856D6);
+  static const Color timerBackgroundGradientEnd = Color(0xFF7C7AFF);
+  static const Color timerInnerCircle = Color(0xFF12112B);
+  static const Color timerInnerShadow = Color(0xFFBDBDF9);
+  static const Color timerTimeText = Color(0xFF12112B);
+  static const Color timerLabelText = Color(0xFF12112B);
+  
+  // Badge Colors
+  static const Color focusBadgeBorder = Color(0xFFE6E6F9);
+  static const Color focusBadgeText = Color(0xFF5856D6);
+  static const Color focusBadgeIcon = Color(0xFF5856D6);
+
+  // Grey Shades
+  static const Color greyF2 = Color(0xFFF2F2F7);
+  static const Color greyF7 = Color(0xFFF7F7FA);
+  static const Color greyC7 = Color(0xFFC7C7CC);
+  static const Color grey8E = Color(0xFF8E8E93);
+  
+  // Play Button Colors
+  static const Color playButtonGradientStart = Color(0xFF5856D6);
+  static const Color playButtonGradientEnd = Color(0xFF2E2D70);
+  static const Color playButtonBorder = Color(0xFF5856D6);
+  static const Color playButtonShadow = Color(0xFFFFFFFF);
 }

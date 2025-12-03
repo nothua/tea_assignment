@@ -18,6 +18,11 @@ class AppDimensions {
   static double get fontSize16 => 16.sp;
   static double get fontSize18 => 18.sp;
   static double get fontSize22 => 22.sp;
+  static double get fontSize38 => 38.sp;
+  
+  static double get timerTimeFontSize => 38.sp;
+  static double get timerLabelFontSize => 12.sp;
+  static double get sliderLabelFontSize => 11.sp;
   
   static const double cardPadding = 12;
   static double get headerVerticalPadding => 24.h;
@@ -92,4 +97,19 @@ class AppDimensions {
   static const double choiceChipHorizontalPadding = 12.0;
   static const double choiceChipVerticalPadding = 8.0;
   static const double choiceChipBorderWidth = 1.0;
+  
+  // Circle Button Sizes
+  static double get circleButtonSizeSmall => 36.w;
+  static double get circleButtonSizeMedium => 48.w;
+  static double get circleButtonSizeLarge => 54.w;
+  
+  // Badge Dimensions
+  static double get badgePaddingHorizontal => 12.w;
+  static double get badgePaddingVertical => 6.h;
+  static double get badgeBorderRadius => 20.r;
+  
+  // Bottom Bar Dimensions
+  static double get bottomBarPaddingHorizontal => 24.w;
+  static double get bottomBarPaddingVertical => 18.h;
+  static double get distractionButtonRadius => 30.r;
 }
