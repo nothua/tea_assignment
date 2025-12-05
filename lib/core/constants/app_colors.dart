@@ -71,4 +71,21 @@ class AppColors {
   static const Color playButtonGradientEnd = Color(0xFF2E2D70);
   static const Color playButtonBorder = Color(0xFF5856D6);
   static const Color playButtonShadow = Color(0xFFFFFFFF);
+
+  // Daily Metrics Colors
+  static const Color textDarkBlue = Color(0xFF2C2C5E);
+  static const Color tickColor = Color(0xFFE5E5EA);
+  static const Color metricSleep = Color(0xFF353568);
+  static const Color metricPlan = Color(0xFFFF6B4A);
+  static const Color metricOpen = Color(0xFF8B8BE5);
+  static const Color metricWork = Color(0xFF5E5CE6); 
+  
+  static const Color metricInner1 = Color(0xFF5E5CE6);
+  static const Color metricInner2 = Color(0xFF32ADE6);
+  static const Color metricInner3 = Color(0xFFFF2D55);
+  
+  static const Color metricDone = Color(0xFF4CD964);
+  static const Color metricCanceled = Color(0xFFFF3B30);
+  static const Color metricOverdue = Color(0xFFFFCC00);
+  static const Color metricMoved = Color(0xFF8E8E93);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tea_assignment/core/theme/app_theme.dart';
 import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
 import 'package:tea_assignment/features/active_task/screens/active_task_screen.dart';
+import 'package:tea_assignment/features/daily_metrics/screens/daily_metrics_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dart:io';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           title: 'TEA Assignment',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: const ActiveTaskScreen(),
+          home: const DailyMetricsScreen(),
         );
       },
     );

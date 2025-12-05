@@ -89,6 +89,7 @@ class AppDimensions {
   
   static double get iconSize16 => 16.w;
   static double get iconSize22 => 22.w;
+  static double get iconSize24 => 24.w;
   static double get iconSize28 => 28.w;
   
   static double get gridSpacing16 => 16.w;
@@ -112,4 +113,24 @@ class AppDimensions {
   static double get bottomBarPaddingHorizontal => 24.w;
   static double get bottomBarPaddingVertical => 18.h;
   static double get distractionButtonRadius => 30.r;
+
+  // Daily Metrics Dimensions
+  static double get dailyMetricsChartSize => 145.w;
+  static double get dailyMetricsOuterStrokeWidth => 12.w;
+  static double get dailyMetricsInnerStrokeWidth => 5.w;
+  static double get dailyMetricsRingGap => 2.w;
+  static double get dailyMetricsSegmentGap => 3.w;
+  static double get dailyMetricsLegendCircleSize => 4.w;
+  static double get dailyMetricsLegendPadding => 1.h;
+  static double get dailyMetricsLegendFontSize => 8.sp;
+  static double get dailyMetricsTickRadius => 1.5.w;
+  
+  static double get metricRowProgressBarHeight => 6.h;
+  static double get metricRowBorderRadius => 3.r;
+  static double get metricRowGap => 4.h;
+  static double get metricRowLabelFontSize => 10.sp;
+  static double get metricRowValueFontSize => 8.sp;
+  static double get metricRowPaddingBottom => 6.h;
+  
+  static double get dailyMetricsTitleFontSize => 14.sp;
 }
