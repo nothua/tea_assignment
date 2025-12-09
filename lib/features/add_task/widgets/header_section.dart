@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HeaderSection extends StatelessWidget {
-  const HeaderSection({super.key});
+  final String hintText;
+
+  const HeaderSection({
+    super.key,
+    this.hintText = "Name your task",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class HeaderSection extends StatelessWidget {
           child: TextField(
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
             decoration: InputDecoration(
-              hintText: "Name your task",
+              hintText: hintText,
               hintStyle: TextStyle(color: Colors.grey[400], fontSize: 18.sp, fontWeight: FontWeight.w500),
               border: InputBorder.none,
               isDense: true,

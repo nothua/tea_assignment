@@ -195,7 +195,7 @@ class _FirstTaskScreenState extends State<FirstTaskScreen> {
                       const SizedBox(height: 16),
                       _buildTimeRow('Estimated Duration', '00:00'),
 
-                      SizedBox(height: AppDimensions.spacing35),
+                      SizedBox(height: 50),
 
                       Center(
                         child: CustomButton(

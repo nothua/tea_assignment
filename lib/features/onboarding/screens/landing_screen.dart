@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tea_assignment/features/onboarding/screens/welcome_screen.dart';
+import 'package:tea_assignment/shared/widgets/custom_button.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -70,31 +71,23 @@ class LandingScreen extends StatelessWidget {
                     const SizedBox(height: 40),
 
                     Center(
-                      child: SizedBox(
-                        height: 48,
+                      child: CustomButton(
+                        text: 'Get Started',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const WelcomeScreen(),
+                            ),
+                          );
+                        },
                         width: 308,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            textStyle: GoogleFonts.outfit(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          child: const Text('Get Started'),
-                        ),
+                        height: 48,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        borderRadius: 30,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 20),

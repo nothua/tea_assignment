@@ -5,6 +5,7 @@ import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/dashboard/screens/first_task_screen.dart';
 import 'package:tea_assignment/features/onboarding/screens/success_screen.dart';
 import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SummaryScreen extends StatelessWidget {
   const SummaryScreen({super.key});
@@ -82,6 +83,7 @@ class SummaryScreen extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 90.h),
         ],
       ),
     );

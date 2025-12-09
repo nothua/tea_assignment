@@ -48,6 +48,9 @@ class CustomButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
+            padding: EdgeInsets.zero, 
+            minimumSize: Size.zero, 
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap, 
             backgroundColor: backgroundColor ?? Colors.white,
             side: hasBorder
                 ? BorderSide(
@@ -80,6 +83,9 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap, 
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
           shadowColor: shadowColor,

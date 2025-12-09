@@ -12,6 +12,7 @@ import 'package:tea_assignment/features/active_task/widgets/task_metadata_row.da
 import 'package:tea_assignment/shared/widgets/app_header.dart';
 import 'package:tea_assignment/shared/widgets/circle_icon_button.dart';
 import 'package:tea_assignment/shared/widgets/status_badge.dart';
+import 'package:tea_assignment/features/active_task/widgets/add_menu_bottom_sheet.dart';
 
 class DistractionEntry {
   final String title;
@@ -215,7 +216,16 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
                   },
                 ),
                 SizedBox(height: 0.h),
-                const ActionButtonsRow(),
+                ActionButtonsRow(
+                  onAddTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const AddMenuBottomSheet(),
+                    );
+                  },
+                ),
+
                 SizedBox(height: 30.h),
                 Text(
                   'Distractions',

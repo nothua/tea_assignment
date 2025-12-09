@@ -51,7 +51,7 @@ class SuccessScreen extends StatelessWidget {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/backgrounds/success.png'),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.fill,
                     alignment: Alignment.topCenter,
                   ),
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/add_task/widgets/action_grid_buttons.dart';
 import 'package:tea_assignment/features/add_task/widgets/date_selection_row.dart';
 import 'package:tea_assignment/features/add_task/widgets/duration_selection_row.dart';
@@ -12,28 +11,29 @@ import 'package:tea_assignment/features/add_task/widgets/simple_input_row.dart';
 import 'package:tea_assignment/features/add_task/widgets/tags_input_row.dart';
 import 'package:tea_assignment/shared/widgets/selectable_chip.dart';
 
-class TaskCreationScreen extends StatelessWidget {
-  const TaskCreationScreen({super.key});
+class AddThoughtsScreen extends StatelessWidget {
+  const AddThoughtsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: TaskCreationSheet(),
+      body: AddThoughtsSheet(),
     );
   }
 }
 
-class TaskCreationSheet extends StatefulWidget {
-  const TaskCreationSheet({super.key});
+class AddThoughtsSheet extends StatefulWidget {
+  const AddThoughtsSheet({super.key});
 
   @override
-  State<TaskCreationSheet> createState() => _TaskCreationSheetState();
+  State<AddThoughtsSheet> createState() => _AddThoughtsSheetState();
 }
 
-class _TaskCreationSheetState extends State<TaskCreationSheet> {
-  final List<String> _tags = ["Tag_1", "Tag_1", "Tag_1"];
-  DateTime _selectedDate = DateTime(2025, 10, 15);
-  TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
+class _AddThoughtsSheetState extends State<AddThoughtsSheet> {
+  final List<String> _tags = ["Tag_1", "Tag_1"];
+  final TextEditingController _noteController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
   String _location = "";
 
   void _addTag() {
@@ -136,7 +136,6 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
   }
 
   String get _formattedDate {
-    // Simple formatting for demo
     return "${_selectedDate.month}/${_selectedDate.day}/${_selectedDate.year}";
   }
 
@@ -156,7 +155,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 10.h),
-              child: const HeaderSection(),
+              child: const HeaderSection(hintText: "Name your thought"),
             ),
 
             const Divider(height: 1),
@@ -167,23 +166,6 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          SelectableChip(label: "Early Morning", isSelected: false, onTap: () {}),
-                          SizedBox(width: 8.w),
-                          SelectableChip(label: "Morning", isSelected: false, onTap: () {}),
-                          SizedBox(width: 8.w),
-                          SelectableChip(label: "Afternoon", isSelected: false, onTap: () {}),
-                          SizedBox(width: 8.w),
-                          SelectableChip(label: "Evening", isSelected: false, onTap: () {}),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-
-                    
                     DateSelectionRow(
                       date: _formattedDate,
                       time: _formattedTime,
@@ -193,25 +175,37 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                     ),
                     SizedBox(height: 24.h),
 
-                    
-                    DurationSelectionRow(
-                      selectedDuration: "00:15",
-                      options: const ["00:15", "00:30", "00:45"],
-                      onDurationSelected: (val) {},
-                      onSetCustom: () {},
+                    const Divider(height: 1),
+                    SizedBox(height: 24.h),
+
+                    Container(
+                      padding: EdgeInsets.all(12.w),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[50],
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(color: Colors.grey[200]!),
+                      ),
+                      child: TextField(
+                        controller: _noteController,
+                        maxLines: 6,
+                        decoration: const InputDecoration(
+                          hintText: "Write your new thought here...",
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 24.h),
 
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
 
-                    
-                    Row(
-                      children: [
-                        Icon(Icons.edit_note_outlined, color: Colors.grey[400], size: 24.sp),
-                        SizedBox(width: 16.w),
-                        Text("Add notes", style: TextStyle(color: Colors.grey[400], fontSize: 16.sp)),
-                      ],
+                    SimpleInputRow(
+                      icon: Icons.link,
+                      hint: "Add Link",
+                      actionLabel: "Add",
+                      actionIcon: Icons.add,
+                      onActionTap: () {},
                     ),
                     SizedBox(height: 24.h),
 
@@ -228,51 +222,6 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
 
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
-
-                    
-                    EnjoymentPurposeSliders(
-                      enjoymentLabel: "Medium",
-                      purposeLabel: "Excitement",
-                      onEnjoymentTap: () {},
-                      onPurposeTap: () {},
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    
-                    NotificationSettingsRow(
-                      notificationTime: "15 minutes before",
-                      isEnabled: true,
-                      onToggle: (val) {},
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    
-                    SimpleInputRow(
-                      icon: Icons.location_on_outlined,
-                      hint: _location.isEmpty ? "Location" : _location,
-                      actionLabel: "Map",
-                      actionIcon: Icons.map_outlined,
-                      onActionTap: _setLocation,
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    
-                    SimpleInputRow(
-                      icon: Icons.domain_outlined,
-                      hint: "Companies",
-                      actionLabel: "Add",
-                      actionIcon: Icons.add,
-                      onActionTap: () {},
-                    ),
 
                     SizedBox(height: 30.h),
 
