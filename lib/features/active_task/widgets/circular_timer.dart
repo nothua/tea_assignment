@@ -21,7 +21,7 @@ class CircularTimer extends StatelessWidget {
   final Color? leftSliderColor;
   final Color? rightSliderColor;
   final bool slidersEnabled;
-  final double progressStrokeWidth;
+  final double? progressStrokeWidth;
   final bool showTicks;
   final bool disabled;
 
@@ -40,7 +40,7 @@ class CircularTimer extends StatelessWidget {
     this.leftSliderColor,
     this.rightSliderColor,
     this.slidersEnabled = true,
-    this.progressStrokeWidth = 16.0,
+    this.progressStrokeWidth,
     this.showTicks = true,
     this.disabled = false,
   });
@@ -49,16 +49,23 @@ class CircularTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     final dims = CircularTimerDimensions(size);
     final widgetSize = dims.width;
-    final effectiveLeftSliderColor = leftSliderColor ?? AppColors.enjoymentColor;
-    final effectiveRightSliderColor = rightSliderColor ?? AppColors.purposeColor;
+    final effectiveLeftSliderColor =
+        leftSliderColor ?? AppColors.enjoymentColor;
+    final effectiveRightSliderColor =
+        rightSliderColor ?? AppColors.purposeColor;
 
-    
     final bool isInteractive = slidersEnabled && !disabled;
 
     return GestureDetector(
-      onPanStart: isInteractive ? (d) => _handlePan(d.localPosition, dims) : null,
-      onPanUpdate: isInteractive ? (d) => _handlePan(d.localPosition, dims) : null,
-      onTapDown: isInteractive ? (d) => _handlePan(d.localPosition, dims) : null,
+      onPanStart: isInteractive
+          ? (d) => _handlePan(d.localPosition, dims)
+          : null,
+      onPanUpdate: isInteractive
+          ? (d) => _handlePan(d.localPosition, dims)
+          : null,
+      onTapDown: isInteractive
+          ? (d) => _handlePan(d.localPosition, dims)
+          : null,
       child: Container(
         width: widgetSize,
         height: widgetSize,
@@ -69,7 +76,7 @@ class CircularTimer extends StatelessWidget {
             CircularProgressArc(
               progress: progress,
               size: size,
-              strokeWidth: progressStrokeWidth,
+              strokeWidth: progressStrokeWidth ?? 16.w,
               startColor: AppColors.timerProgressStart,
               endColor: AppColors.timerProgressEnd,
               showTicks: showTicks,
@@ -78,9 +85,7 @@ class CircularTimer extends StatelessWidget {
               innerCircleRadius: dims.innerCircleRadius,
               disabled: disabled,
             ),
-            TimerDisplay(
-              timeRemaining: timeRemaining,
-            ),
+            TimerDisplay(timeRemaining: timeRemaining),
             SideSliderIndicator(
               label: rightSliderLabel,
               value: rightSliderValue,
@@ -89,7 +94,7 @@ class CircularTimer extends StatelessWidget {
               size: Size(widgetSize, widgetSize),
               radius: dims.rightSliderRadius,
               textOffset: dims.textOffset,
-              enabled: isInteractive, 
+              enabled: isInteractive,
             ),
             SideSliderIndicator(
               label: leftSliderLabel,
@@ -99,7 +104,7 @@ class CircularTimer extends StatelessWidget {
               size: Size(widgetSize, widgetSize),
               radius: dims.leftSliderRadius,
               textOffset: dims.textOffset,
-              enabled: isInteractive, 
+              enabled: isInteractive,
             ),
           ],
         ),
@@ -111,11 +116,10 @@ class CircularTimer extends StatelessWidget {
     final center = dims.center;
     final dx = localPos.dx - center;
     final dy = localPos.dy - center;
-    
-    final dist = math.sqrt(dx * dx + dy * dy);
-    final validRadius = dims.leftSliderRadius; 
 
-    
+    final dist = math.sqrt(dx * dx + dy * dy);
+    final validRadius = dims.leftSliderRadius;
+
     if (dist < validRadius - 40.w || dist > validRadius + 40.w) {
       return;
     }
@@ -124,8 +128,8 @@ class CircularTimer extends StatelessWidget {
 
     if (isLeft) {
       if (onLeftSliderChanged == null) return;
-      
-      final angle = math.atan2(dy, -dx); 
+
+      final angle = math.atan2(dy, -dx);
       _processSliderChange(angle, onLeftSliderChanged!);
     } else {
       if (onRightSliderChanged == null) return;
@@ -142,7 +146,7 @@ class CircularTimer extends StatelessWidget {
     double progress = (startAngleRad - angleRad) / totalSweep;
 
     if (progress < -0.1 || progress > 1.1) return;
-    
+
     progress = progress.clamp(0.0, 1.0);
     onChanged(progress);
   }

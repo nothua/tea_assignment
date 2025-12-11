@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tea_assignment/core/theme/app_theme.dart';
-import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
-import 'package:tea_assignment/features/active_task/screens/active_task_screen.dart';
-import 'package:tea_assignment/features/daily_metrics/screens/daily_metrics_screen.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dart:io';
@@ -29,7 +27,6 @@ void main() async {
   }
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -80,7 +77,12 @@ class TestHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () => _showSheet(context, const TaskCreationSheet()),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TaskCreationScreen(),
+                ),
+              ),
               child: const Text("Create Task"),
             ),
             SizedBox(height: 20.h),

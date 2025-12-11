@@ -10,10 +10,7 @@ class AddMenuBottomSheet extends StatelessWidget {
 
   void _navigateTo(BuildContext context, Widget screen) {
     Navigator.pop(context); // Close the bottom sheet
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => screen),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   @override
@@ -87,7 +84,7 @@ class AddMenuBottomSheet extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(8.w),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: AppColors.primaryPurple.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: color, size: 24.sp),

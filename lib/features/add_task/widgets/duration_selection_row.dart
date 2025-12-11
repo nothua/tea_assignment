@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
+
 import 'package:tea_assignment/shared/widgets/selectable_chip.dart';
 import 'package:tea_assignment/shared/widgets/icon_text_button.dart';
 
@@ -23,14 +23,20 @@ class DurationSelectionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.schedule, color: Colors.grey[500], size: 22.sp),
+        Icon(Icons.schedule, color: Colors.grey[500], size: 18.sp),
         SizedBox(width: 4.w),
-        Text("*", style: TextStyle(color: AppColors.iconRed, fontSize: 16.sp)),
-        SizedBox(width: 12.w),
-        
+        Text(
+          "*",
+          style: TextStyle(color: AppColors.iconRed, fontSize: 12.sp),
+        ),
+        SizedBox(width: 4.w),
+
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
             child: Row(
               children: options.map((duration) {
                 final isSelected = duration == selectedDuration;
@@ -44,13 +50,17 @@ class DurationSelectionRow extends StatelessWidget {
                     selectedTextColor: const Color(0xFF5F5FBC),
                     unselectedColor: AppColors.greyF7,
                     unselectedTextColor: const Color(0xFFA0A0C0),
+                    showCheckmark: true,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Roboto Flex',
                   ),
                 );
               }).toList(),
             ),
           ),
         ),
-        
+
         SizedBox(width: 8.w),
         IconTextButton(
           icon: Icons.tune,

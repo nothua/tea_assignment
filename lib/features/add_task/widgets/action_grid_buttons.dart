@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class ActionGridButtons extends StatelessWidget {
   final VoidCallback? onLocationTap;
@@ -21,21 +20,54 @@ class ActionGridButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _bottomBtn(Icons.location_on_outlined, "Location", isSelected: true, onTap: onLocationTap),
+        _bottomBtn(
+          Icons.location_on_outlined,
+          "Location",
+          isSelected: true,
+          onTap: onLocationTap,
+        ),
         SizedBox(width: 8.w),
-        _bottomBtn(Icons.domain, "Companies", isSelected: true, onTap: onCompaniesTap),
+        _bottomBtn(
+          Icons.domain,
+          "Companies",
+          isSelected: true,
+          onTap: onCompaniesTap,
+        ),
         SizedBox(width: 8.w),
-        _bottomBtn(Icons.person_outline, "Contacts", isSelected: false, onTap: onContactsTap),
+        _bottomBtn(
+          Icons.person_outline,
+          "Contacts",
+          isSelected: false,
+          onTap: onContactsTap,
+        ),
         SizedBox(width: 8.w),
-        _bottomBtn(Icons.attach_file, "Attachments", isSelected: false, isLongText: true, onTap: onAttachmentsTap),
+        _bottomBtn(
+          Icons.attach_file,
+          "Attachments",
+          isSelected: false,
+          isLongText: true,
+          onTap: onAttachmentsTap,
+        ),
       ],
     );
   }
 
-  Widget _bottomBtn(IconData icon, String label, {required bool isSelected, bool isLongText = false, VoidCallback? onTap}) {
-    final bgColor = isSelected ? const Color(0xFFE0E0F6) : const Color(0xFFF7F7F8);
-    final iconColor = isSelected ? const Color(0xFF5F5FBC) : const Color(0xFF8A8AB5);
-    final textColor = isSelected ? const Color(0xFF5F5FBC) : const Color(0xFF8A8AB5);
+  Widget _bottomBtn(
+    IconData icon,
+    String label, {
+    required bool isSelected,
+    bool isLongText = false,
+    VoidCallback? onTap,
+  }) {
+    final bgColor = isSelected
+        ? const Color(0xFFE0E0F6)
+        : const Color(0xFFF7F7F8);
+    final iconColor = isSelected
+        ? const Color(0xFF5F5FBC)
+        : const Color(0xFF8A8AB5);
+    final textColor = isSelected
+        ? const Color(0xFF5F5FBC)
+        : const Color(0xFF8A8AB5);
 
     return Expanded(
       flex: isLongText ? 5 : 4,
@@ -59,21 +91,25 @@ class ActionGridButtons extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 2.0),
                       child: Text(
                         label,
-                        style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
               Positioned(
                 top: 8.h,
                 right: 8.w,
-                child: isSelected 
-                  ? Icon(Icons.check, size: 12.sp, color: textColor)
-                  : Icon(Icons.add, size: 12.sp, color: textColor),
-              )
+                child: isSelected
+                    ? Icon(Icons.check, size: 12.sp, color: textColor)
+                    : Icon(Icons.add, size: 12.sp, color: textColor),
+              ),
             ],
           ),
         ),

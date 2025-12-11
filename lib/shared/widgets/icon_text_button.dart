@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tea_assignment/core/constants/app_colors.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class IconTextButton extends StatelessWidget {
   final IconData icon;
@@ -26,11 +24,7 @@ class IconTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = [
-      Icon(
-        icon,
-        size: iconSize ?? 16.sp,
-        color: color ?? Colors.blue[600],
-      ),
+      Icon(icon, size: iconSize ?? 16.sp, color: color ?? Colors.blue[600]),
       SizedBox(width: isIconLeading ? 4.w : 2.w),
       Text(
         label,

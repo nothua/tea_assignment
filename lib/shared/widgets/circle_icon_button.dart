@@ -39,10 +39,11 @@ class CircleIconButton extends StatelessWidget {
           shape: BoxShape.circle,
           gradient: gradient,
           border: border,
-          boxShadow: boxShadow ??
+          boxShadow:
+              boxShadow ??
               [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: AppColors.primaryPurple.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

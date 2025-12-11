@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF2E2E2E); 
+  static const Color primaryColor = Color(0xFF2E2E2E);
   static const Color secondaryColor = Color(0xFFC4B5FD);
-  static const Color backgroundColor = Color(0xFFF3F4F6); 
+  static const Color backgroundColor = Color(0xFFF3F4F6);
   static const Color darkTextColor = Color(0xFF1F2937);
   static const Color lightTextColor = Colors.white;
 
@@ -17,39 +18,30 @@ class AppTheme {
         surface: backgroundColor,
       ),
       scaffoldBackgroundColor: backgroundColor,
-      fontFamily: 'Inter', 
-      textTheme: const TextTheme(
+      fontFamily: 'Inter',
+      textTheme: TextTheme(
         displayLarge: TextStyle(
-          fontSize: 32,
+          fontSize: 32.sp,
           fontWeight: FontWeight.bold,
           color: darkTextColor,
         ),
         displayMedium: TextStyle(
-          fontSize: 24,
+          fontSize: 24.sp,
           fontWeight: FontWeight.bold,
           color: darkTextColor,
         ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          color: darkTextColor,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
+        bodyLarge: TextStyle(fontSize: 16.sp, color: darkTextColor),
+        bodyMedium: TextStyle(fontSize: 14.sp, color: Colors.grey),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: lightTextColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(30.r),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          padding: EdgeInsets.symmetric(vertical: 16.h),
+          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -57,13 +49,10 @@ class AppTheme {
           foregroundColor: darkTextColor,
           side: const BorderSide(color: Colors.grey),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(30.r),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          padding: EdgeInsets.symmetric(vertical: 16.h),
+          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
     );

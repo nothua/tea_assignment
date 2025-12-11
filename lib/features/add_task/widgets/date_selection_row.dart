@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
+
 import 'package:tea_assignment/shared/widgets/circle_icon_button.dart';
 
 class DateSelectionRow extends StatelessWidget {
@@ -24,11 +24,18 @@ class DateSelectionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.calendar_month_outlined, color: Colors.grey[500], size: 22.sp),
+        Icon(
+          Icons.calendar_month_outlined,
+          color: Colors.grey[500],
+          size: 18.sp,
+        ),
         SizedBox(width: 4.w),
-        Text("*", style: TextStyle(color: AppColors.iconRed, fontSize: 16.sp)),
-        SizedBox(width: 12.w),
-        
+        Text(
+          "*",
+          style: TextStyle(color: AppColors.iconRed, fontSize: 12.sp),
+        ),
+        SizedBox(width: 4.w),
+
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -37,9 +44,10 @@ class DateSelectionRow extends StatelessWidget {
                 Text(
                   date,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.sp,
-                    color: AppColors.textBlack87,
+                    fontFamily: 'Roboto Flex',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp,
+                    color: const Color(0xFF12112B),
                   ),
                 ),
                 SizedBox(width: 8.w),
@@ -48,15 +56,17 @@ class DateSelectionRow extends StatelessWidget {
                 Text(
                   time ?? "hh:mm AM",
                   style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 15.sp,
+                    fontFamily: 'Roboto Flex',
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFFAEAEB2),
+                    fontSize: 14.sp,
                   ),
                 ),
               ],
             ),
           ),
         ),
-        
+
         SizedBox(width: 8.w),
         CircleIconButton(
           icon: Icons.access_time,

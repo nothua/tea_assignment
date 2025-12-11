@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tea_assignment/core/constants/app_colors.dart';
-import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
 class EnjoymentPurposeSliders extends StatelessWidget {
   final String enjoymentLabel;
@@ -25,15 +23,28 @@ class EnjoymentPurposeSliders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                Text("Enjoyment", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
-                SizedBox(width: 4.w),
-                Icon(Icons.help_outline, size: 14.sp, color: Colors.grey[500]),
-              ]),
+              Row(
+                children: [
+                  Text(
+                    "Enjoyment",
+                    style: TextStyle(
+                      fontFamily: 'Roboto Flex',
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Icon(
+                    Icons.help_outline,
+                    size: 14.sp,
+                    color: Colors.grey[500],
+                  ),
+                ],
+              ),
               SizedBox(height: 8.h),
               _sliderContainer(
-                label: enjoymentLabel, 
-                bgColor: const Color(0xFFFFE0D6), 
+                label: enjoymentLabel,
+                bgColor: const Color(0xFFFFE0D6),
                 textColor: const Color(0xFFFF6F42),
                 onTap: onEnjoymentTap,
               ),
@@ -45,15 +56,27 @@ class EnjoymentPurposeSliders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                Text("Purpose", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
-                SizedBox(width: 4.w),
-                Icon(Icons.help_outline, size: 14.sp, color: Colors.grey[500]),
-              ]),
+              Row(
+                children: [
+                  Text(
+                    "Purpose",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Icon(
+                    Icons.help_outline,
+                    size: 14.sp,
+                    color: Colors.grey[500],
+                  ),
+                ],
+              ),
               SizedBox(height: 8.h),
               _sliderContainer(
-                label: purposeLabel, 
-                bgColor: const Color(0xFFD6E4FF), 
+                label: purposeLabel,
+                bgColor: const Color(0xFFD6E4FF),
                 textColor: const Color(0xFF2B75FF),
                 onTap: onPurposeTap,
               ),
@@ -65,8 +88,8 @@ class EnjoymentPurposeSliders extends StatelessWidget {
   }
 
   Widget _sliderContainer({
-    required String label, 
-    required Color bgColor, 
+    required String label,
+    required Color bgColor,
     required Color textColor,
     VoidCallback? onTap,
   }) {
@@ -88,15 +111,20 @@ class EnjoymentPurposeSliders extends StatelessWidget {
                   borderRadius: BorderRadius.circular(22.r),
                 ),
                 child: Text(
-                  label, 
-                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp)
+                  label,
+                  style: TextStyle(
+                    fontFamily: 'Roboto Flex',
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.sp,
+                  ),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Icon(Icons.tune, color: Colors.grey[500], size: 20.sp),
-            )
+            ),
           ],
         ),
       ),

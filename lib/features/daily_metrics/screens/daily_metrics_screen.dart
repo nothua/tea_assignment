@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/core/constants/app_dimensions.dart';
 import 'package:tea_assignment/features/daily_metrics/widgets/daily_metrics_chart.dart';
@@ -15,7 +15,7 @@ class DailyMetricsScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: AppDimensions.padding24, 
+            horizontal: AppDimensions.padding24,
             vertical: AppDimensions.spacing20,
           ),
           child: Column(
@@ -36,7 +36,7 @@ class DailyMetricsScreen extends StatelessWidget {
                   ),
                   Icon(
                     Icons.chevron_right,
-                    size: AppDimensions.iconSize24, 
+                    size: AppDimensions.iconSize24,
                     color: AppColors.grey8E,
                   ),
                 ],

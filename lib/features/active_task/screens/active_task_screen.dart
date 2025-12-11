@@ -36,13 +36,13 @@ class ActiveTaskScreen extends StatefulWidget {
 class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
   double _enjoymentValue = 0.7;
   double _purposeValue = 0.5;
-  
+
   bool _isPlaying = false;
   bool _isProgressDisabled = false;
   final int _totalDurationSeconds = 3600;
   int _remainingSeconds = 1902;
   Timer? _timer;
-  
+
   bool _isDistractionActive = false;
   DateTime? _distractionStartTime;
   int _distractionElapsedSeconds = 0;
@@ -78,7 +78,7 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
     setState(() {
       _isPlaying = !_isPlaying;
       _isProgressDisabled = false;
-      
+
       if (_isPlaying) {
         _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
           setState(() {
@@ -98,7 +98,7 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
 
   void _stopTask() {
     if (_isPlaying) return;
-    
+
     setState(() {
       _isPlaying = false;
       _isProgressDisabled = true;
@@ -109,7 +109,7 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
   void _toggleDistraction() {
     setState(() {
       _isDistractionActive = !_isDistractionActive;
-      
+
       if (_isDistractionActive) {
         _distractionStartTime = DateTime.now();
         _distractionElapsedSeconds = 0;
@@ -122,11 +122,13 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
         _distractionTimer?.cancel();
         if (_distractionStartTime != null) {
           final distractionCount = _distractions.length + 1;
-          _distractions.add(DistractionEntry(
-            title: 'Distraction Task $distractionCount',
-            duration: _formatDuration(_distractionElapsedSeconds),
-            dateTime: _formatDateTime(_distractionStartTime!),
-          ));
+          _distractions.add(
+            DistractionEntry(
+              title: 'Distraction Task $distractionCount',
+              duration: _formatDuration(_distractionElapsedSeconds),
+              dateTime: _formatDateTime(_distractionStartTime!),
+            ),
+          );
         }
         _distractionElapsedSeconds = 0;
         _distractionStartTime = null;
@@ -151,10 +153,7 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
                 AppHeader(
                   title: 'Active Task',
                   trailing: [
-                    StatusBadge(
-                      label: 'Focus',
-                      icon: Icons.adjust,
-                    ),
+                    StatusBadge(label: 'Focus', icon: Icons.adjust),
                     SizedBox(width: 8.w),
                     Container(
                       width: 14.w,
@@ -163,7 +162,11 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
                         color: Color(0xFF8E8E93),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.question_mark, color: Colors.white, size: 10.sp),
+                      child: Icon(
+                        Icons.question_mark,
+                        color: Colors.white,
+                        size: 10.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -247,7 +250,9 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
                       return Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: DistractionTaskCard(
-                          title: distraction.title.isEmpty ? 'Distraction' : distraction.title,
+                          title: distraction.title.isEmpty
+                              ? 'Distraction'
+                              : distraction.title,
                           duration: distraction.duration,
                           dateTime: distraction.dateTime,
                           isOpen: true,
@@ -259,7 +264,7 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
               ],
             ),
           ),
-          
+
           Positioned(
             left: 0,
             right: 0,
@@ -275,15 +280,13 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
 
           if (_isPlaying)
             Positioned.fill(
-              child: Container(
-                color: Colors.black.withValues(alpha: 0.5),
-              ),
+              child: Container(color: Colors.black.withValues(alpha: 0.5)),
             ),
 
           Positioned(
             left: 0,
             right: 0,
-            bottom: AppDimensions.bottomBarPaddingVertical + 10.h, 
+            bottom: AppDimensions.bottomBarPaddingVertical + 10.h,
             child: Center(
               child: CircleIconButton(
                 icon: _isPlaying ? Icons.pause : Icons.play_arrow,
@@ -294,17 +297,19 @@ class _ActiveTaskScreenState extends State<ActiveTaskScreen> {
                 gradient: const LinearGradient(
                   colors: [
                     AppColors.playButtonGradientStart,
-                    AppColors.playButtonGradientEnd
+                    AppColors.playButtonGradientEnd,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
-                  !_isPlaying ? BoxShadow(
-                    color: AppColors.playButtonShadow,
-                    blurRadius: 16,
-                    offset: Offset(0, 8),
-                  ) : BoxShadow()
+                  !_isPlaying
+                      ? BoxShadow(
+                          color: AppColors.playButtonShadow,
+                          blurRadius: 16,
+                          offset: Offset(0, 8),
+                        )
+                      : BoxShadow(),
                 ],
               ),
             ),

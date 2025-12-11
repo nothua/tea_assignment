@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/features/add_task/widgets/action_grid_buttons.dart';
 import 'package:tea_assignment/features/add_task/widgets/date_selection_row.dart';
-import 'package:tea_assignment/features/add_task/widgets/duration_selection_row.dart';
-import 'package:tea_assignment/features/add_task/widgets/enjoyment_purpose_sliders.dart';
 import 'package:tea_assignment/features/add_task/widgets/header_section.dart';
-import 'package:tea_assignment/features/add_task/widgets/notification_settings_row.dart';
 import 'package:tea_assignment/features/add_task/widgets/simple_input_row.dart';
 import 'package:tea_assignment/features/add_task/widgets/tags_input_row.dart';
-import 'package:tea_assignment/shared/widgets/selectable_chip.dart';
 
 class AddThoughtsScreen extends StatelessWidget {
   const AddThoughtsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: AddThoughtsSheet(),
-    );
+    return const Scaffold(body: AddThoughtsSheet());
   }
 }
 
@@ -148,9 +141,7 @@ class _AddThoughtsSheetState extends State<AddThoughtsSheet> {
     return Center(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Column(
           children: [
             Padding(
@@ -212,7 +203,6 @@ class _AddThoughtsSheetState extends State<AddThoughtsSheet> {
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
 
-                    
                     TagsInputRow(
                       tags: _tags,
                       onRemoveTag: _removeTag,
@@ -225,7 +215,6 @@ class _AddThoughtsSheetState extends State<AddThoughtsSheet> {
 
                     SizedBox(height: 30.h),
 
-                    
                     ActionGridButtons(
                       onLocationTap: _setLocation,
                       onCompaniesTap: () {},

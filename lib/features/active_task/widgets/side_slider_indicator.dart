@@ -1,7 +1,8 @@
 import 'dart:math' as math;
-import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tea_assignment/core/constants/app_colors.dart';
 
 class SideSliderIndicator extends StatelessWidget {
   final String label;
@@ -13,7 +14,7 @@ class SideSliderIndicator extends StatelessWidget {
   final double sweepDegrees;
   final double textOffset;
   final double strokeWidth;
-  final bool enabled; 
+  final bool enabled;
 
   const SideSliderIndicator({
     super.key,
@@ -26,7 +27,7 @@ class SideSliderIndicator extends StatelessWidget {
     this.sweepDegrees = 54.0,
     this.textOffset = 11.0,
     this.strokeWidth = 6.0,
-    this.enabled = true, 
+    this.enabled = true,
   });
 
   @override
@@ -34,7 +35,7 @@ class SideSliderIndicator extends StatelessWidget {
     final center = Offset(size.width / 2, size.height / 2);
     final r = radius ?? (136.w + 22.5.w);
     final sweepRad = sweepDegrees * math.pi / 180.0;
-    
+
     final path = Path();
     if (isLeft) {
       path.addArc(
@@ -65,7 +66,7 @@ class SideSliderIndicator extends StatelessWidget {
               size: size,
               painter: _SideSliderPainter(
                 value: value,
-                color: enabled ? color : color.withOpacity(0.5), 
+                color: enabled ? color : color.withValues(alpha: 0.5),
                 path: path,
                 label: label,
                 isLeft: isLeft,
@@ -84,7 +85,7 @@ class SideSliderIndicator extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: AppColors.primaryPurple.withValues(alpha: 0.2),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -93,8 +94,10 @@ class SideSliderIndicator extends StatelessWidget {
                 child: Icon(
                   Icons.menu,
                   size: 16.sp,
-                  
-                  color: enabled ? Colors.grey : Colors.grey.withOpacity(0.5),
+
+                  color: enabled
+                      ? Colors.grey
+                      : Colors.grey.withValues(alpha: 0.5),
                 ),
               ),
             ),
@@ -131,11 +134,9 @@ class _SideSliderPainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
 
-    
-    paint.color = Colors.grey.withOpacity(0.2);
+    paint.color = Colors.grey.withValues(alpha: 0.2);
     canvas.drawPath(path, paint);
 
-    
     final metrics = path.computeMetrics().first;
     final length = metrics.length;
     final endOffset = length * value;
