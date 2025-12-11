@@ -6,14 +6,25 @@ import 'package:tea_assignment/features/add_task/widgets/action_grid_buttons.dar
 import 'package:tea_assignment/features/add_task/widgets/header_section.dart';
 import 'package:tea_assignment/features/add_task/widgets/simple_input_row.dart';
 import 'package:tea_assignment/features/add_task/widgets/tags_input_row.dart';
-import 'package:tea_assignment/shared/widgets/custom_button.dart';
+
+import 'package:tea_assignment/features/add_task/widgets/task_entry_content.dart';
+import 'package:intl/intl.dart';
+import 'package:tea_assignment/features/add_task/widgets/voice_entry_bottom_bar.dart';
+import 'package:tea_assignment/features/add_task/widgets/add_tag_dialog.dart';
+import 'package:tea_assignment/features/add_task/widgets/common_action_rows.dart';
+import 'package:tea_assignment/shared/widgets/boxed_text_field.dart';
 
 class AddEmotionScreen extends StatelessWidget {
   const AddEmotionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: AddEmotionSheet());
+    return TaskEntryContent(
+      title: "Add Emotion",
+      onClose: () => Navigator.pop(context),
+      showHeader: false,
+      child: const AddEmotionSheet(),
+    );
   }
 }
 
@@ -32,6 +43,14 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
   String _location = "";
   int _selectedMoodIndex = 0;
   String? _selectedEmotion;
+
+  // Visibility states for action fields
+  bool _showLocation = false;
+  bool _showCompanies = false;
+  bool _showAttachments = false;
+  bool _showLinks = false;
+  bool _showAssociated = false;
+  bool _showContacts = false;
 
   final Map<int, List<String>> _moodEmotions = {
     0: [
@@ -69,37 +88,11 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
   };
 
   void _addTag() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        String newTag = "";
-        return AlertDialog(
-          title: const Text("Add Tag"),
-          content: TextField(
-            autofocus: true,
-            onChanged: (value) => newTag = value,
-            decoration: const InputDecoration(hintText: "Enter tag name"),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                if (newTag.isNotEmpty) {
-                  setState(() {
-                    _tags.add(newTag);
-                  });
-                }
-                Navigator.pop(context);
-              },
-              child: const Text("Add"),
-            ),
-          ],
-        );
-      },
-    );
+    showAddTagDialog(context, (newTag) {
+      setState(() {
+        _tags.add(newTag);
+      });
+    });
   }
 
   void _removeTag(String tag) {
@@ -134,41 +127,8 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
     }
   }
 
-  void _setLocation() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        String newLocation = _location;
-        return AlertDialog(
-          title: const Text("Set Location"),
-          content: TextField(
-            autofocus: true,
-            onChanged: (value) => newLocation = value,
-            decoration: const InputDecoration(hintText: "Enter location"),
-            controller: TextEditingController(text: _location),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _location = newLocation;
-                });
-                Navigator.pop(context);
-              },
-              child: const Text("Set"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   String get _formattedDate {
-    return "${_selectedDate.month}/${_selectedDate.day}/${_selectedDate.year}";
+    return DateFormat('MMMM d, yyyy').format(_selectedDate);
   }
 
   String get _formattedTime {
@@ -177,100 +137,150 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 10.h),
-              child: const HeaderSection(hintText: "Name your emotion"),
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(8.w, 16.h, 8.w, 80.h),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.r),
             ),
-
-            const Divider(height: 1),
-
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DateSelectionRow(
-                      date: _formattedDate,
-                      time: _formattedTime,
-                      onDateTap: _pickDate,
-                      onTimeTap: _pickTime,
-                      onRepeatTap: () {},
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    SimpleInputRow(
-                      icon: _getMoodIcon(_selectedMoodIndex),
-                      hint: _selectedEmotion != null
-                          ? "${_getMoodLabel(_selectedMoodIndex)} • $_selectedEmotion"
-                          : _getMoodLabel(_selectedMoodIndex),
-                      actionLabel: "Select",
-                      actionIcon: Icons.keyboard_arrow_down,
-                      onActionTap: _showMoodSelectionSheet,
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    // Note Input
-                    Container(
-                      padding: EdgeInsets.all(12.w),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[50],
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: Colors.grey[200]!),
-                      ),
-                      child: TextField(
-                        controller: _noteController,
-                        maxLines: 4,
-                        decoration: const InputDecoration(
-                          hintText: "How are you feeling today?",
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.zero,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 10.h),
+                        child: const HeaderSection(
+                          hintText: "Name your emotion",
                         ),
                       ),
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    TagsInputRow(
-                      tags: _tags,
-                      onRemoveTag: _removeTag,
-                      onAddTag: _addTag,
-                    ),
-                    SizedBox(height: 24.h),
-
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    SizedBox(height: 30.h),
-
-                    ActionGridButtons(
-                      onLocationTap: _setLocation,
-                      onCompaniesTap: () {},
-                      onContactsTap: () {},
-                      onAttachmentsTap: () {},
-                    ),
-                    SizedBox(height: 10.h),
-                  ],
+                      const Divider(height: 1),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.w,
+                          vertical: 16.h,
+                        ),
+                        child: Column(
+                          children: [
+                            DateSelectionRow(
+                              date: _formattedDate,
+                              time: _formattedTime,
+                              onDateTap: _pickDate,
+                              onTimeTap: _pickTime,
+                              onRepeatTap: () {},
+                            ),
+                            SizedBox(height: 24.h),
+                            const Divider(height: 1),
+                            SizedBox(height: 24.h),
+                            SimpleInputRow(
+                              icon: _getMoodIcon(_selectedMoodIndex),
+                              hint: _selectedEmotion != null
+                                  ? "${_getMoodLabel(_selectedMoodIndex)} • $_selectedEmotion"
+                                  : _getMoodLabel(_selectedMoodIndex),
+                              actionLabel: "Select",
+                              actionIcon: Icons.keyboard_arrow_down,
+                              onActionTap: _showMoodSelectionSheet,
+                            ),
+                            SizedBox(height: 24.h),
+                            const Divider(height: 1),
+                            SizedBox(height: 24.h),
+                            // Note Input
+                            BoxedTextField(
+                              controller: _noteController,
+                              hintText: "How are you feeling today?",
+                            ),
+                            SizedBox(height: 24.h),
+                            const Divider(height: 1),
+                            SizedBox(height: 24.h),
+                            TagsInputRow(
+                              tags: _tags,
+                              onRemoveTag: _removeTag,
+                              onAddTag: _addTag,
+                            ),
+                            SizedBox(height: 24.h),
+                            const Divider(height: 1),
+                            SizedBox(height: 24.h),
+                            CommonActionRows(
+                              showLocation: _showLocation,
+                              showCompanies: _showCompanies,
+                              showAttachments: _showAttachments,
+                              showLinks: _showLinks,
+                              showAssociated: _showAssociated,
+                              showContacts: _showContacts,
+                            ),
+                            ActionGridButtons(
+                              // isLocationSelected: _showLocation,
+                              // onLocationTap: () {
+                              //   setState(() {
+                              //     _showLocation = !_showLocation;
+                              //   });
+                              // },
+                              // isCompaniesSelected: _showCompanies,
+                              // onCompaniesTap: () {
+                              //   setState(() {
+                              //     _showCompanies = !_showCompanies;
+                              //   });
+                              // },
+                              // isContactsSelected: _showContacts,
+                              // onContactsTap: () {
+                              //   setState(() {
+                              //     _showContacts = !_showContacts;
+                              //   });
+                              // },
+                              isAttachmentsSelected: _showAttachments,
+                              onAttachmentsTap: () {
+                                setState(() {
+                                  _showAttachments = !_showAttachments;
+                                });
+                              },
+                              // isLinksSelected: _showLinks,
+                              // onLinksTap: () {
+                              //   setState(() {
+                              //     _showLinks = !_showLinks;
+                              //   });
+                              // },
+                              // isAssociatedSelected: _showAssociated,
+                              // onAssociatedTap: () {
+                              //   setState(() {
+                              //     _showAssociated = !_showAssociated;
+                              //   });
+                              // },
+                            ),
+                            SizedBox(height: 12.h),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: VoiceEntryBottomBar(
+            onClose: () => Navigator.pop(context),
+            onCheck: () {
+              // Handle save
+              Navigator.pop(context);
+            },
+            onVoiceEntry: () {
+              // Handle voice entry
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -314,6 +324,10 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
   }
 
   void _showMoodSelectionSheet() {
+    // Initialize temporary state
+    int tempMoodIndex = _selectedMoodIndex;
+    String? tempEmotion = _selectedEmotion;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -348,7 +362,8 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
                   Text(
                     "Select Mood",
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontFamily: 'Roboto Flex',
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -368,18 +383,39 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
                           0,
                           const Color(0xFF10B981),
                           setModalState,
+                          tempMoodIndex,
+                          (index) {
+                            setModalState(() {
+                              tempMoodIndex = index;
+                              tempEmotion = null;
+                            });
+                          },
                         ),
                         _buildSegmentOption(
                           "Mixed",
                           1,
                           Colors.grey,
                           setModalState,
+                          tempMoodIndex,
+                          (index) {
+                            setModalState(() {
+                              tempMoodIndex = index;
+                              tempEmotion = null;
+                            });
+                          },
                         ),
                         _buildSegmentOption(
                           "Negative",
                           2,
                           Colors.red,
                           setModalState,
+                          tempMoodIndex,
+                          (index) {
+                            setModalState(() {
+                              tempMoodIndex = index;
+                              tempEmotion = null;
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -388,8 +424,9 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
                   Text(
                     "Emotions",
                     style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Roboto Flex',
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
                       color: Colors.grey[800],
                     ),
                   ),
@@ -399,25 +436,48 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
                       child: Wrap(
                         spacing: 8.w,
                         runSpacing: 8.h,
-                        children: _moodEmotions[_selectedMoodIndex]!
+                        children: _moodEmotions[tempMoodIndex]!
                             .map(
-                              (emotion) =>
-                                  _buildMoodChip(emotion, setModalState),
+                              (emotion) => _buildMoodChip(
+                                emotion,
+                                setModalState,
+                                tempEmotion,
+                                tempMoodIndex,
+                                (emotion) {
+                                  setModalState(() {
+                                    tempEmotion = emotion;
+                                  });
+                                },
+                              ),
                             )
                             .toList(),
                       ),
                     ),
                   ),
                   SizedBox(height: 24.h),
-                  Center(
-                    child: CustomButton(
-                      text: "Done",
-                      onPressed: () => Navigator.pop(context),
-                      width: double.infinity,
-                      height: 48.h,
-                      backgroundColor: AppColors.loginButtonColor,
-                      textColor: Colors.white,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildActionButton(
+                        icon: Icons.close,
+                        color: const Color(0xFFF2F2F7),
+                        iconColor: const Color(0xFFAEAEB2),
+                        onTap: () => Navigator.pop(context),
+                      ),
+                      _buildActionButton(
+                        icon: Icons.check,
+                        color: const Color(0xFF5856D6),
+                        iconColor: Colors.white,
+                        onTap: () {
+                          // Save changes
+                          setState(() {
+                            _selectedMoodIndex = tempMoodIndex;
+                            _selectedEmotion = tempEmotion;
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -425,9 +485,7 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
           },
         );
       },
-    ).then((_) {
-      setState(() {}); // Update main screen when sheet closes
-    });
+    );
   }
 
   Widget _buildSegmentOption(
@@ -435,20 +493,13 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
     int index,
     Color activeColor,
     StateSetter setModalState,
+    int currentMoodIndex,
+    Function(int) onSelect,
   ) {
-    final isSelected = _selectedMoodIndex == index;
+    final isSelected = currentMoodIndex == index;
     return Expanded(
       child: GestureDetector(
-        onTap: () {
-          setModalState(() {
-            _selectedMoodIndex = index;
-            _selectedEmotion = null; // Reset emotion when mood changes
-          });
-          setState(() {
-            _selectedMoodIndex = index;
-            _selectedEmotion = null;
-          });
-        },
+        onTap: () => onSelect(index),
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -468,17 +519,16 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
     );
   }
 
-  Widget _buildMoodChip(String label, StateSetter setModalState) {
-    final isSelected = _selectedEmotion == label;
+  Widget _buildMoodChip(
+    String label,
+    StateSetter setModalState,
+    String? currentEmotion,
+    int currentMoodIndex,
+    Function(String) onSelect,
+  ) {
+    final isSelected = currentEmotion == label;
     return GestureDetector(
-      onTap: () {
-        setModalState(() {
-          _selectedEmotion = label;
-        });
-        setState(() {
-          _selectedEmotion = label;
-        });
-      },
+      onTap: () => onSelect(label),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
@@ -489,7 +539,7 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
           borderRadius: BorderRadius.circular(20.r),
           border: Border.all(
             color: isSelected
-                ? _getMoodColor(_selectedMoodIndex)
+                ? _getMoodColor(currentMoodIndex)
                 : Colors.transparent,
             width: 1,
           ),
@@ -500,10 +550,27 @@ class _AddEmotionSheetState extends State<AddEmotionSheet> {
             fontSize: 13.sp,
             fontWeight: FontWeight.w500,
             color: isSelected
-                ? _getMoodColor(_selectedMoodIndex)
+                ? _getMoodColor(currentMoodIndex)
                 : Colors.grey[700],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required Color color,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 36.w,
+        height: 36.w,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        child: Icon(icon, color: iconColor, size: 18.sp),
       ),
     );
   }

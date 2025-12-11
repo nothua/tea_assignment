@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:window_manager/window_manager.dart';
 import 'package:tea_assignment/features/add_emotion/screens/add_emotion_screen.dart';
 import 'package:tea_assignment/features/add_task/screens/add_task_screen.dart';
+import 'package:tea_assignment/features/add_task/widgets/task_entry_content.dart';
 import 'package:tea_assignment/features/add_thoughts/screens/add_thoughts_screen.dart';
 
 void main() async {
@@ -95,7 +96,34 @@ class TestHomeScreen extends StatelessWidget {
               onPressed: () => _showSheet(context, const AddThoughtsSheet()),
               child: const Text("Add Thoughts"),
             ),
+            SizedBox(height: 20.h),
+            TextButton(
+              onPressed: () => _showTaskSheet(context),
+              child: const Text("Add Task Sheet"),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _showTaskSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: 0.85.sh,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: TaskEntryContent(
+          title: "Add new Task",
+          onClose: () => Navigator.pop(context),
+          showHeader: false,
+          child: const TaskCreationSheet(),
         ),
       ),
     );

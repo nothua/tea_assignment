@@ -1,19 +1,131 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class EnjoymentPurposeSliders extends StatelessWidget {
+import 'package:flutter_svg/flutter_svg.dart';
+
+class EnjoymentPurposeSliders extends StatefulWidget {
   final String enjoymentLabel;
   final String purposeLabel;
-  final VoidCallback? onEnjoymentTap;
-  final VoidCallback? onPurposeTap;
 
   const EnjoymentPurposeSliders({
     super.key,
     required this.enjoymentLabel,
     required this.purposeLabel,
-    this.onEnjoymentTap,
-    this.onPurposeTap,
   });
+
+  @override
+  State<EnjoymentPurposeSliders> createState() =>
+      _EnjoymentPurposeSlidersState();
+}
+
+class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
+  double _enjoymentValue = 0.5;
+  double _purposeValue = 0.5;
+
+  final LayerLink _enjoymentLayerLink = LayerLink();
+  final LayerLink _purposeLayerLink = LayerLink();
+  OverlayEntry? _overlayEntry;
+
+  String get _currentEnjoymentLabel {
+    if (_enjoymentValue < 0.33) return "Low";
+    if (_enjoymentValue < 0.66) return "Medium";
+    return "High";
+  }
+
+  String get _currentPurposeLabel {
+    if (_purposeValue < 0.33) return "Duty";
+    if (_purposeValue < 0.66) return "Passion";
+    return "Excitement";
+  }
+
+  @override
+  void dispose() {
+    _removeOverlay();
+    super.dispose();
+  }
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
+  void _showSliderOverlay({
+    required LayerLink layerLink,
+    required double value,
+    required Color activeColor,
+    required Color inactiveColor,
+    required ValueChanged<double> onChanged,
+    Alignment targetAnchor = Alignment.bottomLeft,
+    Alignment followerAnchor = Alignment.topLeft,
+  }) {
+    _removeOverlay();
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _removeOverlay,
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+          Positioned(
+            width: 200.w,
+            child: CompositedTransformFollower(
+              link: layerLink,
+              showWhenUnlinked: false,
+              targetAnchor: targetAnchor,
+              followerAnchor: followerAnchor,
+              offset: Offset(0, 8.h),
+              child: Material(
+                elevation: 8,
+                borderRadius: BorderRadius.circular(12.r),
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8.h,
+                    horizontal: 12.w,
+                  ),
+                  child: StatefulBuilder(
+                    builder: (context, setStateOverlay) {
+                      return SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: activeColor,
+                          inactiveTrackColor: inactiveColor,
+                          thumbColor: activeColor,
+                          trackHeight: 4.h,
+                          thumbShape: RoundSliderThumbShape(
+                            enabledThumbRadius: 8.r,
+                          ),
+                          overlayShape: RoundSliderOverlayShape(
+                            overlayRadius: 16.r,
+                          ),
+                        ),
+                        child: Slider(
+                          value: value,
+                          min: 0.0,
+                          max: 1.0,
+                          onChanged: (val) {
+                            setStateOverlay(() {
+                              value = val;
+                            });
+                            onChanged(val);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,30 +135,37 @@ class EnjoymentPurposeSliders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Enjoyment",
-                    style: TextStyle(
-                      fontFamily: 'Roboto Flex',
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(width: 4.w),
-                  Icon(
-                    Icons.help_outline,
-                    size: 14.sp,
-                    color: Colors.grey[500],
-                  ),
-                ],
+              Text(
+                "Enjoyment",
+                style: TextStyle(
+                  fontFamily: 'Roboto Flex',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 8.h),
-              _sliderContainer(
-                label: enjoymentLabel,
-                bgColor: const Color(0xFFFFE0D6),
-                textColor: const Color(0xFFFF6F42),
-                onTap: onEnjoymentTap,
+              CompositedTransformTarget(
+                link: _enjoymentLayerLink,
+                child: _sliderContainer(
+                  label: _currentEnjoymentLabel,
+                  bgColor: const Color(0xFFFFE0D6),
+                  textColor: const Color(0xFFFF6F42),
+                  onTap: () {
+                    _showSliderOverlay(
+                      layerLink: _enjoymentLayerLink,
+                      value: _enjoymentValue,
+                      activeColor: const Color(0xFFFF6F42),
+                      inactiveColor: const Color(0xFFFFE0D6),
+                      onChanged: (val) {
+                        setState(() {
+                          _enjoymentValue = val;
+                        });
+                      },
+                      targetAnchor: Alignment.bottomLeft,
+                      followerAnchor: Alignment.topLeft,
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -56,29 +175,37 @@ class EnjoymentPurposeSliders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Purpose",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 4.w),
-                  Icon(
-                    Icons.help_outline,
-                    size: 14.sp,
-                    color: Colors.grey[500],
-                  ),
-                ],
+              Text(
+                "Purpose",
+                style: TextStyle(
+                  fontFamily: 'Roboto Flex',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 8.h),
-              _sliderContainer(
-                label: purposeLabel,
-                bgColor: const Color(0xFFD6E4FF),
-                textColor: const Color(0xFF2B75FF),
-                onTap: onPurposeTap,
+              CompositedTransformTarget(
+                link: _purposeLayerLink,
+                child: _sliderContainer(
+                  label: _currentPurposeLabel,
+                  bgColor: const Color(0xFFD6E4FF),
+                  textColor: const Color(0xFF2B75FF),
+                  onTap: () {
+                    _showSliderOverlay(
+                      layerLink: _purposeLayerLink,
+                      value: _purposeValue,
+                      activeColor: const Color(0xFF2B75FF),
+                      inactiveColor: const Color(0xFFD6E4FF),
+                      onChanged: (val) {
+                        setState(() {
+                          _purposeValue = val;
+                        });
+                      },
+                      targetAnchor: Alignment.bottomRight,
+                      followerAnchor: Alignment.topRight,
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -123,7 +250,15 @@ class EnjoymentPurposeSliders extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Icon(Icons.tune, color: Colors.grey[500], size: 20.sp),
+              child: SvgPicture.asset(
+                "assets/images/icons/system_icons.svg",
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFF8E8E93),
+                  BlendMode.srcIn,
+                ),
+                width: 20.sp,
+                height: 20.sp,
+              ),
             ),
           ],
         ),

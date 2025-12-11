@@ -67,7 +67,6 @@ class _StatusSelectorState extends State<StatusSelector> {
     _overlayEntry = OverlayEntry(
       builder: (context) => Stack(
         children: [
-          // Blur Background
           Positioned.fill(
             child: GestureDetector(
               onTap: _removeOverlay,

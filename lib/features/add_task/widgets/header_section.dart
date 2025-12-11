@@ -49,11 +49,7 @@ class HeaderSection extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8.w),
-        StatusSelector(
-          onStatusChanged: (status) {
-            // Handle status change if needed, or expose callback
-          },
-        ),
+        StatusSelector(onStatusChanged: (status) {}),
       ],
     );
   }

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/shared/widgets/tag_chip.dart';
 import 'package:tea_assignment/shared/widgets/icon_text_button.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 class TagsInputRow extends StatelessWidget {
   final List<String> tags;
   final Function(String) onRemoveTag;
@@ -20,8 +22,16 @@ class TagsInputRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.local_offer_outlined, color: Colors.grey[500], size: 18.sp),
-        SizedBox(width: 16.w),
+        SvgPicture.asset(
+          "assets/images/icons/tag.svg",
+          colorFilter: const ColorFilter.mode(
+            Color(0xFF8E8E93),
+            BlendMode.srcIn,
+          ),
+          width: 16.sp,
+          height: 16.sp,
+        ),
+        SizedBox(width: 14.w),
 
         Expanded(
           child: SingleChildScrollView(

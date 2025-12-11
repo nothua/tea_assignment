@@ -5,6 +5,8 @@ import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/shared/widgets/selectable_chip.dart';
 import 'package:tea_assignment/shared/widgets/icon_text_button.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 class DurationSelectionRow extends StatelessWidget {
   final String selectedDuration;
   final List<String> options;
@@ -22,8 +24,17 @@ class DurationSelectionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.schedule, color: Colors.grey[500], size: 18.sp),
+        SvgPicture.asset(
+          "assets/images/icons/clock.svg",
+          colorFilter: const ColorFilter.mode(
+            Color(0xFF8E8E93),
+            BlendMode.srcIn,
+          ),
+          width: 18.sp,
+          height: 18.sp,
+        ),
         SizedBox(width: 4.w),
         Text(
           "*",
@@ -63,7 +74,7 @@ class DurationSelectionRow extends StatelessWidget {
 
         SizedBox(width: 8.w),
         IconTextButton(
-          icon: Icons.tune,
+          svgIcon: "assets/images/icons/system_icons.svg",
           label: "Set",
           onTap: onSetCustom,
           color: Colors.blue[600],

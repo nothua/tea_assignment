@@ -4,6 +4,8 @@ import 'package:tea_assignment/core/constants/app_colors.dart';
 
 import 'package:tea_assignment/shared/widgets/circle_icon_button.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 class DateSelectionRow extends StatelessWidget {
   final String date;
   final String? time;
@@ -23,11 +25,16 @@ class DateSelectionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          Icons.calendar_month_outlined,
-          color: Colors.grey[500],
-          size: 18.sp,
+        SvgPicture.asset(
+          "assets/images/icons/calender.svg",
+          colorFilter: const ColorFilter.mode(
+            Color(0xFF8E8E93),
+            BlendMode.srcIn,
+          ),
+          width: 18.sp,
+          height: 18.sp,
         ),
         SizedBox(width: 4.w),
         Text(
@@ -69,17 +76,17 @@ class DateSelectionRow extends StatelessWidget {
 
         SizedBox(width: 8.w),
         CircleIconButton(
-          icon: Icons.access_time,
+          svgIcon: "assets/images/icons/alarm.svg",
           size: 34.w,
           iconSize: 18.sp,
           color: AppColors.greyF7,
-          iconColor: Colors.grey[400],
+          iconColor: const Color(0xFF8E8E93),
           onTap: onTimeTap,
           boxShadow: const [],
         ),
         SizedBox(width: 8.w),
         CircleIconButton(
-          icon: Icons.cached,
+          svgIcon: "assets/images/icons/refresh-2.svg",
           size: 34.w,
           iconSize: 18.sp,
           color: AppColors.greyF7,

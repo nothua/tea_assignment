@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SelectableChip extends StatelessWidget {
   final String label;
@@ -14,6 +15,7 @@ class SelectableChip extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final String? fontFamily;
+  final String? iconPath;
 
   const SelectableChip({
     super.key,
@@ -28,6 +30,7 @@ class SelectableChip extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     this.fontFamily,
+    this.iconPath,
   });
 
   @override
@@ -45,7 +48,31 @@ class SelectableChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (showCheckmark && isSelected) ...[
+            if (iconPath != null) ...[
+              if (iconPath!.endsWith('.svg'))
+                SvgPicture.asset(
+                  iconPath!,
+                  width: 16.w,
+                  height: 16.w,
+                  colorFilter: ColorFilter.mode(
+                    isSelected
+                        ? (selectedTextColor ?? AppColors.choiceChipSelected)
+                        : (unselectedTextColor ?? AppColors.textGrey),
+                    BlendMode.srcIn,
+                  ),
+                )
+              else
+                Image.asset(
+                  iconPath!,
+                  width: 16.w,
+                  height: 16.w,
+                  color: isSelected
+                      ? (selectedTextColor ?? AppColors.choiceChipSelected)
+                      : (unselectedTextColor ?? AppColors.textGrey),
+                ),
+              SizedBox(width: 6.w),
+            ],
+            if (showCheckmark && isSelected && iconPath == null) ...[
               Icon(
                 Icons.check,
                 size: 16.sp,

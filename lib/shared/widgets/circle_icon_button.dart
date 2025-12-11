@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/core/constants/app_dimensions.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 class CircleIconButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? svgIcon;
   final VoidCallback? onTap;
   final double? size;
   final double? iconSize;
@@ -16,7 +19,8 @@ class CircleIconButton extends StatelessWidget {
 
   const CircleIconButton({
     super.key,
-    required this.icon,
+    this.icon,
+    this.svgIcon,
     this.onTap,
     this.size,
     this.iconSize,
@@ -25,7 +29,10 @@ class CircleIconButton extends StatelessWidget {
     this.boxShadow,
     this.border,
     this.gradient,
-  });
+  }) : assert(
+         icon != null || svgIcon != null,
+         'Either icon or svgIcon must be provided',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +56,21 @@ class CircleIconButton extends StatelessWidget {
                 ),
               ],
         ),
-        child: Icon(
-          icon,
-          color: iconColor ?? AppColors.choiceChipSelected,
-          size: iconSize ?? 24.sp,
+        child: Center(
+          child: svgIcon != null
+              ? SvgPicture.asset(
+                  svgIcon!,
+                  colorFilter: iconColor != null
+                      ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+                      : null,
+                  width: iconSize ?? 24.sp,
+                  height: iconSize ?? 24.sp,
+                )
+              : Icon(
+                  icon,
+                  color: iconColor ?? AppColors.choiceChipSelected,
+                  size: iconSize ?? 24.sp,
+                ),
         ),
       ),
     );
