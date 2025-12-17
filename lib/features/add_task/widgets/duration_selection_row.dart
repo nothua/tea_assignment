@@ -27,7 +27,7 @@ class DurationSelectionRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SvgPicture.asset(
-          "assets/images/icons/clock.svg",
+          "assets/images/icons/alarm.svg",
           colorFilter: const ColorFilter.mode(
             Color(0xFF8E8E93),
             BlendMode.srcIn,

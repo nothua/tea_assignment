@@ -28,11 +28,13 @@ class TagChip extends StatelessWidget {
               color: AppColors.textPrimary,
             ),
           ),
-          SizedBox(width: 4.w),
-          GestureDetector(
-            onTap: onRemove,
-            child: Icon(Icons.close, size: 14.sp, color: Colors.grey[500]),
-          ),
+          if (onRemove != null) ...[
+            SizedBox(width: 4.w),
+            GestureDetector(
+              onTap: onRemove,
+              child: Icon(Icons.close, size: 14.sp, color: Colors.grey[500]),
+            ),
+          ],
         ],
       ),
     );

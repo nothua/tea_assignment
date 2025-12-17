@@ -15,7 +15,10 @@ class AppHeader extends StatelessWidget {
     this.onBackPressed,
     this.trailing,
     this.titleColor,
+    this.showBackButton = true,
   });
+
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +33,17 @@ class AppHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios, size: 18.sp),
-                onPressed: onBackPressed ?? () => Navigator.pop(context),
-                color: AppColors.textPrimary,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-              ),
-              if (trailing != null)
-                Row(
-                  children: trailing!,
-                ),
+              if (showBackButton)
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios, size: 18.sp),
+                  onPressed: onBackPressed ?? () => Navigator.pop(context),
+                  color: AppColors.textPrimary,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                )
+              else
+                SizedBox(width: 18.sp + 16.w),
+              if (trailing != null) Row(children: trailing!),
             ],
           ),
           Text(

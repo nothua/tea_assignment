@@ -17,6 +17,7 @@ class SummaryScreen extends StatelessWidget {
       subtitle: 'Your Personal Profile Summary',
       text: "Based on your inputs, here is a snapshot of your habits",
       progress: 1.0,
+      imageSpaceHeight: 120,
       backgroundImage: 'assets/images/illustrations/summary.png',
       onContinue: () {
         Navigator.push(
@@ -83,7 +84,6 @@ class SummaryScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 90.h),
         ],
       ),
     );

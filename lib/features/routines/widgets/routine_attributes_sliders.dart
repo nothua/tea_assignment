@@ -1,47 +1,35 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 
-class EnjoymentPurposeSliders extends StatefulWidget {
-  final String enjoymentLabel;
-  final String purposeLabel;
-
-  const EnjoymentPurposeSliders({
-    super.key,
-    required this.enjoymentLabel,
-    required this.purposeLabel,
-    this.necessityLabel = "Medium", // Default if not provided
-  });
-
-  final String necessityLabel;
+class RoutineAttributesSliders extends StatefulWidget {
+  const RoutineAttributesSliders({super.key});
 
   @override
-  State<EnjoymentPurposeSliders> createState() =>
-      _EnjoymentPurposeSlidersState();
+  State<RoutineAttributesSliders> createState() =>
+      _RoutineAttributesSlidersState();
 }
 
-class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
-  double _enjoymentValue = 0.5;
+class _RoutineAttributesSlidersState extends State<RoutineAttributesSliders> {
   double _purposeValue = 0.5;
+  double _enjoymentValue = 0.5;
   double _necessityValue = 0.5;
 
-  final LayerLink _enjoymentLayerLink = LayerLink();
   final LayerLink _purposeLayerLink = LayerLink();
+  final LayerLink _enjoymentLayerLink = LayerLink();
   final LayerLink _necessityLayerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-
-  String get _currentEnjoymentLabel {
-    if (_enjoymentValue < 0.33) return "Low";
-    if (_enjoymentValue < 0.66) return "Medium";
-    return "High";
-  }
 
   String get _currentPurposeLabel {
     if (_purposeValue < 0.33) return "Duty";
     if (_purposeValue < 0.66) return "Passion";
     return "Excitement";
+  }
+
+  String get _currentEnjoymentLabel {
+    if (_enjoymentValue < 0.33) return "Low";
+    if (_enjoymentValue < 0.66) return "Medium";
+    return "High";
   }
 
   String get _currentNecessityLabel {
@@ -142,46 +130,7 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Enjoyment",
-                style: TextStyle(
-                  fontFamily: 'Roboto Flex',
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              CompositedTransformTarget(
-                link: _enjoymentLayerLink,
-                child: _sliderContainer(
-                  label: _currentEnjoymentLabel,
-                  bgColor: const Color(0xFFFFE0D6),
-                  textColor: const Color(0xFFFF6F42),
-                  onTap: () {
-                    _showSliderOverlay(
-                      layerLink: _enjoymentLayerLink,
-                      value: _enjoymentValue,
-                      activeColor: const Color(0xFFFF6F42),
-                      inactiveColor: const Color(0xFFFFE0D6),
-                      onChanged: (val) {
-                        setState(() {
-                          _enjoymentValue = val;
-                        });
-                      },
-                      targetAnchor: Alignment.bottomLeft,
-                      followerAnchor: Alignment.topLeft,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(width: 12.w), // Reduced spacing to fit 3 items
+        // Purpose
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,9 +161,6 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
                           _purposeValue = val;
                         });
                       },
-                      targetAnchor:
-                          Alignment.bottomCenter, // Centered alignment
-                      followerAnchor: Alignment.topCenter,
                     );
                   },
                 ),
@@ -223,6 +169,46 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
           ),
         ),
         SizedBox(width: 12.w),
+        // Enjoyment
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Enjoyment",
+                style: TextStyle(
+                  fontFamily: 'Roboto Flex',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              CompositedTransformTarget(
+                link: _enjoymentLayerLink,
+                child: _sliderContainer(
+                  label: _currentEnjoymentLabel,
+                  bgColor: const Color(0xFFFFE0D6),
+                  textColor: const Color(0xFFFF6F42),
+                  onTap: () {
+                    _showSliderOverlay(
+                      layerLink: _enjoymentLayerLink,
+                      value: _enjoymentValue,
+                      activeColor: const Color(0xFFFF6F42),
+                      inactiveColor: const Color(0xFFFFE0D6),
+                      onChanged: (val) {
+                        setState(() {
+                          _enjoymentValue = val;
+                        });
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 12.w),
+        // Necessity
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,14 +226,14 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
                 link: _necessityLayerLink,
                 child: _sliderContainer(
                   label: _currentNecessityLabel,
-                  bgColor: const Color(0xFFE0E0E0), // Grey ish for Necessity
-                  textColor: const Color(0xFF616161),
+                  bgColor: const Color(0xFFF3F0FF),
+                  textColor: const Color(0xFF7F56D9), // Primary Purple
                   onTap: () {
                     _showSliderOverlay(
                       layerLink: _necessityLayerLink,
                       value: _necessityValue,
-                      activeColor: const Color(0xFF616161),
-                      inactiveColor: const Color(0xFFE0E0E0),
+                      activeColor: const Color(0xFF7F56D9),
+                      inactiveColor: const Color(0xFFF3F0FF),
                       onChanged: (val) {
                         setState(() {
                           _necessityValue = val;
@@ -301,15 +287,17 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              padding: EdgeInsets.symmetric(
+                horizontal: 4.w,
+              ), // Reduce padding to fit 3 cols
               child: SvgPicture.asset(
                 "assets/images/icons/system_icons.svg",
                 colorFilter: const ColorFilter.mode(
                   Color(0xFF8E8E93),
                   BlendMode.srcIn,
                 ),
-                width: 20.sp,
-                height: 20.sp,
+                width: 16.sp, // Slightly smaller icon
+                height: 16.sp,
               ),
             ),
           ],

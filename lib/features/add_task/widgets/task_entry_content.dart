@@ -25,7 +25,10 @@ class TaskEntryContent extends StatelessWidget {
     this.trailing,
     this.showHeader = true,
     this.showVoiceButton = true,
+    this.showBackButton = true,
   });
+
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class TaskEntryContent extends StatelessWidget {
             color: Colors.white,
             child: AppHeader(
               title: title,
+              showBackButton: showBackButton,
               onBackPressed: onClose,
               trailing:
                   trailing ??

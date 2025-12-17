@@ -40,14 +40,25 @@ class TaskCreationScreen extends StatelessWidget {
 
 class TaskCreationSheet extends StatefulWidget {
   final String? parentTaskTitle;
+  final String? initialTitle;
+  final TextEditingController? controller;
 
-  const TaskCreationSheet({super.key, this.parentTaskTitle});
+  const TaskCreationSheet({
+    super.key,
+    this.parentTaskTitle,
+    this.initialTitle,
+    this.controller,
+    this.isRoutineTask = false,
+  });
+
+  final bool isRoutineTask;
 
   @override
   State<TaskCreationSheet> createState() => _TaskCreationSheetState();
 }
 
 class _TaskCreationSheetState extends State<TaskCreationSheet> {
+  late TextEditingController _titleController;
   final List<String> _tags = ["Tag_1", "Tag_1", "Tag_1"];
   DateTime _selectedDate = DateTime(2025, 10, 15);
   TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
@@ -59,6 +70,21 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
   // Repeat Task State
   String? _repeatFrequency;
   DateTime? _repeatEndDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController =
+        widget.controller ?? TextEditingController(text: widget.initialTitle);
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _titleController.dispose();
+    }
+    super.dispose();
+  }
 
   // Visibility states for action fields
   bool _showLocation = true;
@@ -294,7 +320,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                           ),
                           SizedBox(height: 16.h),
                         ],
-                        const HeaderSection(),
+                        HeaderSection(controller: _titleController),
                       ],
                     ),
                   ),
@@ -306,90 +332,136 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                     ),
                     child: Column(
                       children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: [
-                              SelectableChip(
-                                label: "Early Morning",
-                                isSelected:
-                                    _selectedTimePeriod == "Early Morning",
-                                onTap: () => _selectTimePeriod("Early Morning"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath:
-                                    "assets/images/icons/early_morning.svg",
-                              ),
-                              SizedBox(width: 8.w),
-                              SelectableChip(
-                                label: "Morning",
-                                isSelected: _selectedTimePeriod == "Morning",
-                                onTap: () => _selectTimePeriod("Morning"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath: "assets/images/icons/morning.svg",
-                              ),
-                              SizedBox(width: 8.w),
-                              SelectableChip(
-                                label: "Afternoon",
-                                isSelected: _selectedTimePeriod == "Afternoon",
-                                onTap: () => _selectTimePeriod("Afternoon"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath: "assets/images/icons/afternoon.svg",
-                              ),
-                              SizedBox(width: 8.w),
-                              SelectableChip(
-                                label: "Evening",
-                                isSelected: _selectedTimePeriod == "Evening",
-                                onTap: () => _selectTimePeriod("Evening"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath: "assets/images/icons/evening.svg",
-                              ),
-                              SizedBox(width: 8.w),
-                              SelectableChip(
-                                label: "Night",
-                                isSelected: _selectedTimePeriod == "Night",
-                                onTap: () => _selectTimePeriod("Night"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath: "assets/images/icons/night.svg",
-                              ),
-                              SizedBox(width: 8.w),
-                              SelectableChip(
-                                label: "Late Night",
-                                isSelected: _selectedTimePeriod == "Late Night",
-                                onTap: () => _selectTimePeriod("Late Night"),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Roboto Flex',
-                                unselectedTextColor: const Color(0xFF8E8E93),
-                                iconPath: "assets/images/icons/last_night.svg",
-                              ),
-                            ],
+                        if (!widget.isRoutineTask) ...[
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: [
+                                SelectableChip(
+                                  label: "Early Morning",
+                                  isSelected:
+                                      _selectedTimePeriod == "Early Morning",
+                                  onTap: () =>
+                                      _selectTimePeriod("Early Morning"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath:
+                                      "assets/images/icons/early_morning.svg",
+                                ),
+                                SizedBox(width: 8.w),
+                                SelectableChip(
+                                  label: "Morning",
+                                  isSelected: _selectedTimePeriod == "Morning",
+                                  onTap: () => _selectTimePeriod("Morning"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath: "assets/images/icons/morning.svg",
+                                ),
+                                SizedBox(width: 8.w),
+                                SelectableChip(
+                                  label: "Afternoon",
+                                  isSelected:
+                                      _selectedTimePeriod == "Afternoon",
+                                  onTap: () => _selectTimePeriod("Afternoon"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath: "assets/images/icons/afternoon.svg",
+                                ),
+                                SizedBox(width: 8.w),
+                                SelectableChip(
+                                  label: "Evening",
+                                  isSelected: _selectedTimePeriod == "Evening",
+                                  onTap: () => _selectTimePeriod("Evening"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath: "assets/images/icons/evening.svg",
+                                ),
+                                SizedBox(width: 8.w),
+                                SelectableChip(
+                                  label: "Night",
+                                  isSelected: _selectedTimePeriod == "Night",
+                                  onTap: () => _selectTimePeriod("Night"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath: "assets/images/icons/night.svg",
+                                ),
+                                SizedBox(width: 8.w),
+                                SelectableChip(
+                                  label: "Late Night",
+                                  isSelected:
+                                      _selectedTimePeriod == "Late Night",
+                                  onTap: () => _selectTimePeriod("Late Night"),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Roboto Flex',
+                                  unselectedTextColor: const Color(0xFF8E8E93),
+                                  iconPath:
+                                      "assets/images/icons/last_night.svg",
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 24.h),
+                          SizedBox(height: 24.h),
+                        ],
 
-                        DateSelectionRow(
-                          date: _formattedDate,
-                          time: _formattedTime,
-                          onDateTap: _pickDate,
-                          onTimeTap: _pickTime,
-                          onRepeatTap: _showCalendarSyncDialog,
-                        ),
+                        if (widget.isRoutineTask)
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 12.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF9F9F9),
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(
+                                color: const Color(0xFFF2F2F7),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/images/icons/calender.svg", // Updated to calendar icon
+                                  width: 20.sp,
+                                  height: 20.sp,
+                                  colorFilter: const ColorFilter.mode(
+                                    Color(0xFF8E8E93),
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                SizedBox(width: 12.w),
+                                Expanded(
+                                  child: Text(
+                                    "Synced with Routine Date and Time",
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto Flex',
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF8E8E93),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          DateSelectionRow(
+                            date: _formattedDate,
+                            time: _formattedTime,
+                            onDateTap: _pickDate,
+                            onTimeTap: _pickTime,
+                            onRepeatTap: _showCalendarSyncDialog,
+                          ),
                         SizedBox(height: 24.h),
 
                         DurationSelectionRow(
@@ -444,6 +516,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
 
                         const Divider(height: 1),
                         SizedBox(height: 24.h),
+
                         SimpleInputRow(
                           icon: Icons.flag_outlined,
                           hint: "Goal",
@@ -455,161 +528,131 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         const Divider(height: 1),
                         SizedBox(height: 24.h),
 
-                        if (_repeatFrequency == null)
-                          SimpleInputRow(
-                            icon: Icons.repeat,
-                            hint: "Repeat Task",
-                            actionLabel: "Does not repeat",
-                            onActionTap: _showRepeatTaskDialog,
-                          )
-                        else
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 4.h),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.repeat,
-                                  color: Colors.grey[500],
-                                  size: 18.sp,
-                                ),
-                                SizedBox(width: 13.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Frequency: $_repeatFrequency",
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto Flex',
-                                          fontSize: 14.sp,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4.h),
-                                      Text(
-                                        _repeatEndDate == null
-                                            ? "Ends: Never"
-                                            : "Ends: ${DateFormat('MMMM d, yyyy').format(_repeatEndDate!)}",
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto Flex',
-                                          fontSize: 12.sp,
-                                          color: Colors.grey[400],
-                                        ),
-                                      ),
-                                    ],
+                        // Repeat Task, Subtask, Follow up task (Hidden for Routine Tasks)
+                        if (!widget.isRoutineTask) ...[
+                          if (_repeatFrequency == null)
+                            SimpleInputRow(
+                              svgIcon: "assets/images/icons/refresh-2.svg",
+                              hint: "Repeat Task",
+                              actionLabel: "Does not repeat",
+                              onActionTap: _showRepeatTaskDialog,
+                            )
+                          else
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 4.h),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.repeat,
+                                    color: Colors.grey[500],
+                                    size: 18.sp,
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: _showRepeatTaskDialog,
-                                  child: Text(
-                                    "Edit",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto Flex',
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF12112B),
+                                  SizedBox(width: 13.w),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Frequency: $_repeatFrequency",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto Flex',
+                                            fontSize: 14.sp,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.h),
+                                        Text(
+                                          _repeatEndDate == null
+                                              ? "Ends: Never"
+                                              : "Ends: ${DateFormat('MMMM d, yyyy').format(_repeatEndDate!)}",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto Flex',
+                                            fontSize: 12.sp,
+                                            color: Colors.grey[400],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 16.w),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _repeatFrequency = null;
-                                      _repeatEndDate = null;
-                                    });
-                                  },
-                                  child: Text(
-                                    "Remove",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto Flex',
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFFE94E34),
+                                  GestureDetector(
+                                    onTap: _showRepeatTaskDialog,
+                                    child: Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto Flex',
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFF12112B),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 16.w),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _repeatFrequency = null;
+                                        _repeatEndDate = null;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Remove",
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto Flex',
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xFFE94E34),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
+                          SizedBox(height: 24.h),
+                          const Divider(height: 1),
+                          SizedBox(height: 24.h),
+
+                          // Subtask
+                          SimpleInputRow(
+                            svgIcon: "assets/images/icons/task-square.svg",
+                            hint: "Subtask",
+                            actionLabel: "Add Subtask",
+                            onActionTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => Container(
+                                  height: 0.85.sh,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20.r),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: Text("Subtasks Feature Coming Soon"),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        SizedBox(height: 24.h),
+                          SizedBox(height: 24.h),
+                          const Divider(height: 1),
+                          SizedBox(height: 24.h),
 
-                        const Divider(height: 1),
-                        SizedBox(height: 24.h),
-
-                        SimpleInputRow(
-                          icon: Icons.checklist,
-                          hint: "Subtask",
-                          actionLabel: "Add Subtask",
-                          onActionTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => Container(
-                                height: 0.85.sh,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20.r),
-                                  ),
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                child: TaskEntryContent(
-                                  title: "Add Subtask",
-                                  onClose: () => Navigator.pop(context),
-                                  showHeader: false,
-                                  showVoiceButton: false,
-                                  child: TaskCreationSheet(
-                                    parentTaskTitle: "Design Team Meeting",
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 24.h),
-
-                        const Divider(height: 1),
-                        SizedBox(height: 24.h),
-
-                        SimpleInputRow(
-                          icon: Icons.forward,
-                          hint: "Follow up task",
-                          actionLabel: "Add Follow up",
-                          onActionTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => Container(
-                                height: 0.85.sh,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20.r),
-                                  ),
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                child: TaskEntryContent(
-                                  title: "Add Follow up",
-                                  onClose: () => Navigator.pop(context),
-                                  showHeader: false,
-                                  showVoiceButton: false,
-                                  child: TaskCreationSheet(
-                                    parentTaskTitle: "Design Team Meeting",
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 24.h),
-
-                        const Divider(height: 1),
-                        SizedBox(height: 24.h),
+                          // Follow up task
+                          SimpleInputRow(
+                            icon: Icons.arrow_forward,
+                            hint: "Follow up task",
+                            actionLabel: "Add Follow up",
+                            onActionTap: () {},
+                          ),
+                          SizedBox(height: 24.h),
+                          const Divider(height: 1),
+                          SizedBox(height: 24.h),
+                        ],
 
                         TagsInputRow(
                           tags: _tags,
@@ -624,6 +667,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         EnjoymentPurposeSliders(
                           enjoymentLabel: "Medium",
                           purposeLabel: "Excitement",
+                          necessityLabel: "Medium",
                         ),
                         SizedBox(height: 24.h),
 

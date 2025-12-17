@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tea_assignment/core/theme/app_theme.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tea_assignment/features/onboarding/screens/landing_screen.dart';
+import 'package:tea_assignment/features/routines/screens/routines_screen.dart';
 
 import 'dart:io';
 import 'package:window_manager/window_manager.dart';
@@ -100,6 +102,22 @@ class TestHomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () => _showTaskSheet(context),
               child: const Text("Add Task Sheet"),
+            ),
+            SizedBox(height: 20.h),
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RoutinesScreen()),
+              ),
+              child: const Text("Routine"),
+            ),
+            SizedBox(height: 20.h),
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LandingScreen()),
+              ),
+              child: const Text("Landing"),
             ),
           ],
         ),

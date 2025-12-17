@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tea_assignment/shared/widgets/custom_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tea_assignment/core/constants/app_colors.dart';
 import 'package:tea_assignment/core/constants/app_dimensions.dart';
+import 'package:tea_assignment/features/onboarding/widgets/onboarding_layout.dart';
 import 'package:tea_assignment/shared/widgets/custom_choice_chip.dart';
-
 
 class FirstTaskScreen extends StatefulWidget {
   const FirstTaskScreen({super.key});
@@ -27,206 +25,71 @@ class _FirstTaskScreenState extends State<FirstTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/illustrations/clarity_starts_here.png',
-                  ),
-                  fit: BoxFit.fitWidth,
-                  alignment: Alignment.topCenter,
-                ),
-              ),
+    return OnboardingLayout(
+      title: 'Clarity Starts Here',
+      subtitle: 'Start Your First Action',
+      text: "Choose One Thing you'd like to complete today",
+      showProgressBar: false,
+      imageSpaceHeight: 120,
+      backgroundImage: 'assets/images/illustrations/clarity_starts_here.png',
+      onContinue: () {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Setup Complete!')));
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppDimensions.padding16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'What\'s one task you want to complete today?',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.3),
-                    Colors.black.withValues(alpha: 0.1),
-                  ],
-                ),
-              ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: _tasks.map((task) {
+                final isSelected = _selectedTask == task;
+                return CustomChoiceChip(
+                  label: task,
+                  isSelected: isSelected,
+                  onSelected: (selected) {
+                    setState(() {
+                      _selectedTask = selected ? task : null;
+                    });
+                  },
+                  selectedColor: AppColors.sliderActive,
+                  backgroundColor: AppColors.backgroundTransparent,
+                  selectedLabelColor: AppColors.whiteColor,
+                  unselectedLabelColor: AppColors.textBlack87,
+                  selectedBorderColor: AppColors.sliderActive,
+                  unselectedBorderColor: Colors.grey.shade300,
+                );
+              }).toList(),
             ),
-          ),
+            const SizedBox(height: 24),
 
-          Positioned.fill(
-            child: Column(
+            const Text(
+              'When would you like to do this?',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Row(
               children: [
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppDimensions.headerHorizontalPadding,
-                      vertical: AppDimensions.headerVerticalPadding,
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Image.asset(
-                              'assets/images/icons/back_white.png',
-                              width: AppDimensions.backButtonWidth,
-                              height: AppDimensions.backButtonHeight,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'Clarity Starts Here',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.outfit(
-                                fontSize: AppDimensions.titleFontSize,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.whiteColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                const Spacer(),
-
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(AppDimensions.cardPadding),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [AppColors.gradientStart, AppColors.gradientEnd],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: AppDimensions.spacing25),
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Start Your First Action',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.outfit(
-                                fontSize: AppDimensions.subtitleFontSize,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.subtitleTextColor,
-                              ),
-                            ),
-                            SizedBox(height: AppDimensions.spacing5),
-                            Text(
-                              'Choose One Thing you\'d like to complete today',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.dmSans(
-                                fontSize: AppDimensions.bodyFontSize,
-                                color: AppColors.subtitleTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppDimensions.spacing20),
-
-                      const Text(
-                        'What\'s one task you want to complete today?',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: _tasks.map((task) {
-                          final isSelected = _selectedTask == task;
-                          return CustomChoiceChip(
-                            label: task,
-                            isSelected: isSelected,
-                            onSelected: (selected) {
-                              setState(() {
-                                _selectedTask = selected ? task : null;
-                              });
-                            },
-                            selectedColor: AppColors.sliderActive,
-                            backgroundColor: AppColors.backgroundTransparent,
-                            selectedLabelColor: AppColors.whiteColor,
-                            unselectedLabelColor: AppColors.textBlack87,
-                            selectedBorderColor: AppColors.sliderActive,
-                            unselectedBorderColor: Colors.grey.shade300,
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 24),
-
-                      const Text(
-                        'When would you like to do this?',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(child: _buildDayButton('Today')),
-                          const SizedBox(width: 16),
-                          Expanded(child: _buildDayButton('Tomorrow')),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-
-                      _buildTimeRow('Select Start Time', '00:00 AM'),
-                      const SizedBox(height: 16),
-                      _buildTimeRow('Estimated Duration', '00:00'),
-
-                      SizedBox(height: 50),
-
-                      Center(
-                        child: CustomButton(
-                          text: 'Continue',
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Setup Complete!')),
-                            );
-                          },
-                          width: AppDimensions.buttonWidth,
-                          height: AppDimensions.buttonHeight,
-                          backgroundColor: AppColors.loginButtonColor,
-                          textColor: Colors.white,
-                          shadowColor: AppColors.loginButtonColor.withValues(
-                            alpha: 0.4,
-                          ),
-                          elevation: AppDimensions.buttonElevation,
-                          borderRadius: AppDimensions.buttonBorderRadius,
-                          hasBorder: true,
-                          borderColor: Colors.black,
-                          borderWidth: AppDimensions.buttonBorderWidth,
-                        ),
-                      ),
-                      SizedBox(height: AppDimensions.spacing65),
-                    ],
-                  ),
-                ),
+                Expanded(child: _buildDayButton('Today')),
+                const SizedBox(width: 16),
+                Expanded(child: _buildDayButton('Tomorrow')),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+
+            _buildTimeRow('Select Start Time', '00:00 AM'),
+            const SizedBox(height: 16),
+            _buildTimeRow('Estimated Duration', '00:00'),
+          ],
+        ),
       ),
     );
   }
