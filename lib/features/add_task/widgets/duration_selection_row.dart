@@ -27,7 +27,7 @@ class DurationSelectionRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SvgPicture.asset(
-          "assets/images/icons/alarm.svg",
+          "assets/images/icons/clock.svg",
           colorFilter: const ColorFilter.mode(
             Color(0xFF8E8E93),
             BlendMode.srcIn,
@@ -75,7 +75,7 @@ class DurationSelectionRow extends StatelessWidget {
         SizedBox(width: 8.w),
         IconTextButton(
           svgIcon: "assets/images/icons/system_icons.svg",
-          label: "Set",
+          label: "", // Removed Label "Set"
           onTap: onSetCustom,
           color: Colors.blue[600],
           iconSize: 20.sp,

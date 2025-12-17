@@ -18,6 +18,7 @@ class OnboardingLayout extends StatelessWidget {
   final bool showButton;
   final bool expandChild;
   final double imageSpaceHeight;
+  final Widget? floatingActionButton;
 
   const OnboardingLayout({
     super.key,
@@ -33,12 +34,15 @@ class OnboardingLayout extends StatelessWidget {
     this.showButton = true,
     this.expandChild = false,
     this.imageSpaceHeight = 170,
+    this.floatingActionButton,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Stack(
         children: [
           Positioned.fill(

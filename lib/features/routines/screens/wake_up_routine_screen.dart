@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,8 +53,34 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
       showProgressBar: false,
       showButton: false,
       expandChild: true,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 20.h),
+        child: SizedBox(
+          width: 56.w,
+          height: 56.w,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditRoutineScreen(),
+                ),
+              );
+            },
+            backgroundColor: const Color(0xFF7E57C2), // Purple color
+            shape: const CircleBorder(),
+            elevation: 4,
+            child: Icon(Icons.edit_outlined, size: 24.sp, color: Colors.white),
+          ),
+        ),
+      ),
       child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 40.h),
+        padding: EdgeInsets.fromLTRB(
+          20.w,
+          24.h,
+          20.w,
+          80.h,
+        ), // Extra padding for FAB
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -85,9 +112,9 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                           ? 'Audible Alarm On'
                           : 'Audible Alarm Off',
                       style: TextStyle(
-                        fontFamily: 'Outfit',
+                        fontFamily: 'Roboto Flex', // Changed font
                         fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400, // Regular weight
                         color: const Color(0xFF333333),
                       ),
                     ),
@@ -123,7 +150,7 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                     width: 24.w,
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
-                      'assets/images/icons/notification.svg',
+                      'assets/images/icons/notification_alarm.svg', // Swapped icon
                       width: 16.sp,
                       height: 16.sp,
                       colorFilter: const ColorFilter.mode(
@@ -142,9 +169,9 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                               ? _notificationTime
                               : "Notification Off",
                           style: TextStyle(
-                            fontFamily: 'Outfit',
+                            fontFamily: 'Roboto Flex', // Changed font
                             fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400, // Regular weight
                             color: const Color(0xFF12112B),
                           ),
                         ),
@@ -161,7 +188,7 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                   ),
                   CircleIconButton(
                     svgIcon: _isNotificationEnabled
-                        ? 'assets/images/icons/notification_alarm.svg'
+                        ? 'assets/images/icons/notification.svg' // Swapped icon back
                         : 'assets/images/icons/no_notification_alarm.svg',
                     size: 28.w,
                     iconSize: 16.sp,
@@ -293,61 +320,63 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
             ),
             SizedBox(height: 16.h),
 
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 8.h),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.r),
-                child: ReorderableListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 0),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  buildDefaultDragHandles: false,
-                  itemCount: _tasks.length,
-                  onReorder: (oldIndex, newIndex) {
-                    setState(() {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final item = _tasks.removeAt(oldIndex);
-                      _tasks.insert(newIndex, item);
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    final task = _tasks[index];
-                    return ReorderableDelayedDragStartListener(
-                      key: ValueKey(task['title'] + index.toString()),
-                      index: index,
-                      child: Container(
-                        child: RoutineTaskItem(
-                          title: task['title'],
-                          duration: task['duration'],
-                          color: task['color'],
-                          isDetailed: task['isDetailed'],
-                          isChecked: task['isChecked'] ?? false,
-                          showDivider:
-                              index != _tasks.length - 1, // Logic for divider
-                          onChanged: (value) {
-                            setState(() {
-                              task['isChecked'] = value;
-                            });
-                          },
-                        ),
-                      ),
+            ReorderableListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 0),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              buildDefaultDragHandles: false,
+              proxyDecorator: (child, index, animation) {
+                return AnimatedBuilder(
+                  animation: animation,
+                  builder: (BuildContext context, Widget? child) {
+                    final double animValue = Curves.easeInOut.transform(
+                      animation.value,
+                    );
+                    final double elevation = lerpDouble(0, 6, animValue)!;
+                    return Material(
+                      elevation: elevation,
+                      color: Colors.transparent,
+                      shadowColor: Colors.black.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: child,
                     );
                   },
-                ),
-              ),
+                  child: child,
+                );
+              },
+              itemCount: _tasks.length,
+              onReorder: (oldIndex, newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final item = _tasks.removeAt(oldIndex);
+                  _tasks.insert(newIndex, item);
+                });
+              },
+              itemBuilder: (context, index) {
+                final task = _tasks[index];
+                // Use a Key that is unique. 'task['title']' might not be unique enough but okay for now.
+                return Padding(
+                  key: ValueKey(task['title'] + index.toString()),
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: RoutineTaskItem(
+                    index: index, // Pass index for drag handle
+                    title: task['title'],
+                    time: task['time'],
+                    duration: task['duration'],
+                    color: task['color'],
+                    isDetailed: task['isDetailed'],
+                    isChecked: task['isChecked'] ?? false,
+                    showDivider: false,
+                    onChanged: (value) {
+                      setState(() {
+                        task['isChecked'] = value;
+                      });
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -378,38 +407,14 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 5.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Wake-Up Routine',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF333333),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
-                  CircleIconButton(
-                    icon: Icons.edit_outlined,
-                    size: 28.w,
-                    iconSize: 16.sp,
-                    color: const Color(0xFFF3F0FF),
-                    iconColor: AppColors.textGrey,
-                    boxShadow: [],
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EditRoutineScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+              Text(
+                'Wake-Up Routine',
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF333333),
+                ),
               ),
               SizedBox(height: 8.h),
               Row(
@@ -421,8 +426,8 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                     children: [
                       SvgPicture.asset(
                         'assets/images/icons/clock.svg',
-                        width: 18.sp,
-                        height: 18.sp,
+                        width: 14.sp,
+                        height: 14.sp,
                         colorFilter: const ColorFilter.mode(
                           Color(0xFF333333),
                           BlendMode.srcIn,
@@ -432,17 +437,17 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                       Text(
                         '07:00 AM',
                         style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Roboto Flex', // Regular font
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400, // Not bold
                           color: const Color(0xFF6B6B6B),
                         ),
                       ),
                       SizedBox(width: 12.w),
                       SvgPicture.asset(
                         'assets/images/icons/alarm.svg',
-                        width: 18.sp,
-                        height: 18.sp,
+                        width: 14.sp,
+                        height: 14.sp,
                         colorFilter: const ColorFilter.mode(
                           Color(0xFF333333),
                           BlendMode.srcIn,
@@ -452,13 +457,21 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                       Text(
                         'hh:mm',
                         style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Roboto Flex',
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400, // Not bold
                           color: const Color(0xFF6B6B6B),
                         ),
                       ),
-                      SizedBox(width: 12.w),
+                    ],
+                  ),
+
+                  const Spacer(),
+
+                  // Right Group: Daily
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
                       SvgPicture.asset(
                         'assets/images/icons/repeat.svg',
                         width: 14.sp,
@@ -472,28 +485,13 @@ class _WakeUpRoutineScreenState extends State<WakeUpRoutineScreen> {
                       Text(
                         'Daily',
                         style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Roboto Flex',
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400, // Not bold
                           color: const Color(0xFF6B6B6B),
                         ),
                       ),
                     ],
-                  ),
-
-                  const Spacer(),
-
-                  // Right Group: Only Infinity Button
-                  CircleIconButton(
-                    svgIcon: 'assets/images/icons/calender-infinity.svg',
-                    size: 28.w,
-                    iconSize: 16.sp,
-                    color: const Color(0xFFF3F0FF),
-                    iconColor: const Color(0xFF333333),
-                    boxShadow: [],
-                    onTap: () {
-                      // Logic
-                    },
                   ),
                 ],
               ),

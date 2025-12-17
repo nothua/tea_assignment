@@ -31,6 +31,7 @@ class EditRoutineScreen extends StatelessWidget {
         child: TaskEntryContent(
           title: "Edit Routine",
           onClose: () => Navigator.pop(context),
+          trailing: [], // Remove default trailing icon
           onCheck: () {
             // Save logic here
             Navigator.pop(context);
@@ -240,7 +241,10 @@ class _EditRoutineContentState extends State<EditRoutineContent> {
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 10.h),
-                child: const HeaderSection(hintText: "Name your routine"),
+                child: const HeaderSection(
+                  hintText: "Name your routine",
+                  showStatusSelector: true,
+                ),
               ),
               const Divider(height: 1),
               Padding(
@@ -248,32 +252,31 @@ class _EditRoutineContentState extends State<EditRoutineContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Repeating Frequency (Moved to top)
+                    // Repeating Frequency
                     SimpleInputRow(
                       svgIcon: "assets/images/icons/refresh-2.svg",
                       hint: "Repeating Frequency",
-                      actionLabel: _repeatFrequency ?? "Does not repeat",
+                      actionLabel: _repeatFrequency ?? "Set frequency",
                       onActionTap: _openRepeatFrequencySheet,
                     ),
                     SizedBox(height: 24.h),
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
 
-                    // Repeats Until (Moved to top)
+                    // Repeats Until
                     SimpleInputRow(
                       svgIcon: "assets/images/icons/calender.svg",
                       hint: "Repeats Until",
                       actionLabel: _repeatEndDate != null
                           ? DateFormat('MMMM d, yyyy').format(_repeatEndDate!)
-                          : "Never Ends",
-                      actionIcon: _repeatEndDate == null
-                          ? Icons.all_inclusive
-                          : null,
+                          : "Select Date",
                       onActionTap: _pickRepeatUntilDate,
                     ),
                     SizedBox(height: 24.h),
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
+
+                    // Repeats Until Removed
 
                     // Time Periods
                     SingleChildScrollView(
@@ -377,6 +380,22 @@ class _EditRoutineContentState extends State<EditRoutineContent> {
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
 
+                    // Notification (Moved Up)
+                    NotificationSettingsRow(
+                      notificationTime: _notificationTime,
+                      isEnabled: _isNotificationEnabled,
+                      useSwitch: true, // Use toggle switch as requested
+                      onToggle: (val) {
+                        setState(() {
+                          _isNotificationEnabled = val;
+                        });
+                      },
+                      onTimeTap: () {},
+                    ),
+                    SizedBox(height: 18.h),
+                    const Divider(height: 1),
+                    SizedBox(height: 24.h),
+
                     // Notes
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -418,31 +437,6 @@ class _EditRoutineContentState extends State<EditRoutineContent> {
                       ],
                     ),
                     SizedBox(height: 24.h),
-                    const Divider(height: 1),
-                    SizedBox(height: 24.h),
-
-                    // Tags
-                    TagsInputRow(
-                      tags: _tags,
-                      onRemoveTag: _removeTag,
-                      onAddTag: _addTag,
-                    ),
-                    SizedBox(height: 24.h),
-                    const Divider(height: 1),
-                    SizedBox(height: 18.h),
-
-                    // Notification
-                    NotificationSettingsRow(
-                      notificationTime: _notificationTime,
-                      isEnabled: _isNotificationEnabled,
-                      onToggle: (val) {
-                        setState(() {
-                          _isNotificationEnabled = val;
-                        });
-                      },
-                      onTimeTap: () {},
-                    ),
-                    SizedBox(height: 18.h),
                     const Divider(height: 1),
                     SizedBox(height: 24.h),
 

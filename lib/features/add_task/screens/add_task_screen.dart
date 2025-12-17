@@ -418,7 +418,8 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         if (widget.isRoutineTask)
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
+                              horizontal: 0
+                                  .w, // Removed horizontal padding to align with other icons
                               vertical: 12.h,
                             ),
                             decoration: BoxDecoration(
@@ -431,7 +432,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  "assets/images/icons/calender.svg", // Updated to calendar icon
+                                  "assets/images/icons/calender.svg",
                                   width: 20.sp,
                                   height: 20.sp,
                                   colorFilter: const ColorFilter.mode(
@@ -520,7 +521,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         SimpleInputRow(
                           icon: Icons.flag_outlined,
                           hint: "Goal",
-                          actionLabel: "Set Goal",
+                          actionLabel: "Link",
                           onActionTap: () {},
                         ),
                         SizedBox(height: 24.h),
@@ -667,6 +668,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         EnjoymentPurposeSliders(
                           enjoymentLabel: "Medium",
                           purposeLabel: "Excitement",
+                          showNecessity: widget.isRoutineTask,
                           necessityLabel: "Medium",
                         ),
                         SizedBox(height: 24.h),
@@ -677,6 +679,7 @@ class _TaskCreationSheetState extends State<TaskCreationSheet> {
                         NotificationSettingsRow(
                           notificationTime: _notificationTime,
                           isEnabled: _isNotificationEnabled,
+                          useSwitch: true, // Revert to toggle switch
                           onToggle: (val) {
                             setState(() {
                               _isNotificationEnabled = val;

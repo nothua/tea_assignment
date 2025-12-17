@@ -46,42 +46,118 @@ class RoutineCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          children: [
-            // Icon Box
-            Container(
-              width: 48.w,
-              height: 48.w,
-              padding: EdgeInsets.all(10.w),
-              decoration: BoxDecoration(
-                color: iconBackgroundColor,
-                borderRadius: BorderRadius.circular(12.r),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Icon Box
+              Center(
+                child: Container(
+                  width: 48.w,
+                  height: 48.w,
+                  padding: EdgeInsets.all(10.w),
+                  decoration: BoxDecoration(
+                    color: iconBackgroundColor,
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: SvgPicture.asset(
+                    iconAsset,
+                    colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                  ),
+                ),
               ),
-              child: SvgPicture.asset(
-                iconAsset,
-                colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+              SizedBox(width: 12.w),
+              // Middle Content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF333333),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/icons/clock.svg',
+                          width: 14.sp,
+                          height: 14.sp,
+                          colorFilter: const ColorFilter.mode(
+                            Color(0xFF6B6B6B),
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          startTime,
+                          style: TextStyle(
+                            fontFamily: 'Roboto Flex',
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF6B6B6B),
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        SvgPicture.asset(
+                          'assets/images/icons/clock.svg',
+                          width: 14.sp,
+                          height: 14.sp,
+                          colorFilter: const ColorFilter.mode(
+                            Color(0xFF6B6B6B),
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          endTime,
+                          style: TextStyle(
+                            fontFamily: 'Roboto Flex',
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF6B6B6B),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 12.w),
-            // Middle Content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(width: 8.w),
+              // Right Side
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF333333),
+                  // Alarm Icon (Placeholder for now, based on image)
+                  Container(
+                    width: 24.w,
+                    height: 24.w,
+                    decoration: BoxDecoration(
+                      color: const Color(
+                        0xFFF3F0FF,
+                      ), // Light purple bg for alarm
+                      shape: BoxShape.circle,
+                    ),
+                    // Using a timer or alarm icon
+                    child: Center(
+                      child: Icon(
+                        Icons.timer_outlined, // Or specific asset if available
+                        size: 14.sp,
+                        color: const Color(0xFFD1C4E9),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 4.h),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SvgPicture.asset(
-                        'assets/images/icons/clock.svg',
+                        'assets/images/icons/repeat.svg',
                         width: 14.sp,
                         height: 14.sp,
                         colorFilter: const ColorFilter.mode(
@@ -91,27 +167,7 @@ class RoutineCard extends StatelessWidget {
                       ),
                       SizedBox(width: 4.w),
                       Text(
-                        startTime,
-                        style: TextStyle(
-                          fontFamily: 'Roboto Flex',
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF6B6B6B),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      SvgPicture.asset(
-                        'assets/images/icons/clock.svg',
-                        width: 14.sp,
-                        height: 14.sp,
-                        colorFilter: const ColorFilter.mode(
-                          Color(0xFF6B6B6B),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        endTime,
+                        frequency,
                         style: TextStyle(
                           fontFamily: 'Roboto Flex',
                           fontSize: 12.sp,
@@ -123,57 +179,8 @@ class RoutineCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            SizedBox(width: 8.w),
-            // Right Side
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                // Alarm Icon (Placeholder for now, based on image)
-                Container(
-                  width: 24.w,
-                  height: 24.w,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF3F0FF), // Light purple bg for alarm
-                    shape: BoxShape.circle,
-                  ),
-                  // Using a timer or alarm icon
-                  child: Center(
-                    child: Icon(
-                      Icons.timer_outlined, // Or specific asset if available
-                      size: 14.sp,
-                      color: const Color(0xFFD1C4E9),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/icons/repeat.svg',
-                      width: 14.sp,
-                      height: 14.sp,
-                      colorFilter: const ColorFilter.mode(
-                        Color(0xFF6B6B6B),
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Text(
-                      frequency,
-                      style: TextStyle(
-                        fontFamily: 'Roboto Flex',
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF6B6B6B),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -7,15 +7,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class EnjoymentPurposeSliders extends StatefulWidget {
   final String enjoymentLabel;
   final String purposeLabel;
+  final String necessityLabel;
+  final bool showNecessity;
 
   const EnjoymentPurposeSliders({
     super.key,
     required this.enjoymentLabel,
     required this.purposeLabel,
-    this.necessityLabel = "Medium", // Default if not provided
+    this.necessityLabel = "Medium",
+    this.showNecessity = true,
   });
-
-  final String necessityLabel;
 
   @override
   State<EnjoymentPurposeSliders> createState() =>
@@ -23,6 +24,7 @@ class EnjoymentPurposeSliders extends StatefulWidget {
 }
 
 class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
+  // ... (keep state variables and methods same) ...
   double _enjoymentValue = 0.5;
   double _purposeValue = 0.5;
   double _necessityValue = 0.5;
@@ -70,6 +72,10 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
     Alignment targetAnchor = Alignment.bottomLeft,
     Alignment followerAnchor = Alignment.topLeft,
   }) {
+    // ... (implementation of _showSliderOverlay remains same, omitted for brevity in replace block if possible, but tool requires contiguous block replacement. For safety I will assume I need to replace the build method primarily or just the class definition and build method) ...
+    // Actually, replace_file_content is better for large chunks if I replace the whole class content or use multi_replace.
+    // Since I need to change constructor AND the build method (for order), I will replace the whole file content mostly.
+
     _removeOverlay();
 
     _overlayEntry = OverlayEntry(
@@ -142,46 +148,7 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Enjoyment",
-                style: TextStyle(
-                  fontFamily: 'Roboto Flex',
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              CompositedTransformTarget(
-                link: _enjoymentLayerLink,
-                child: _sliderContainer(
-                  label: _currentEnjoymentLabel,
-                  bgColor: const Color(0xFFFFE0D6),
-                  textColor: const Color(0xFFFF6F42),
-                  onTap: () {
-                    _showSliderOverlay(
-                      layerLink: _enjoymentLayerLink,
-                      value: _enjoymentValue,
-                      activeColor: const Color(0xFFFF6F42),
-                      inactiveColor: const Color(0xFFFFE0D6),
-                      onChanged: (val) {
-                        setState(() {
-                          _enjoymentValue = val;
-                        });
-                      },
-                      targetAnchor: Alignment.bottomLeft,
-                      followerAnchor: Alignment.topLeft,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(width: 12.w), // Reduced spacing to fit 3 items
+        // 1. Purpose
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,9 +179,8 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
                           _purposeValue = val;
                         });
                       },
-                      targetAnchor:
-                          Alignment.bottomCenter, // Centered alignment
-                      followerAnchor: Alignment.topCenter,
+                      targetAnchor: Alignment.bottomLeft,
+                      followerAnchor: Alignment.topLeft,
                     );
                   },
                 ),
@@ -223,12 +189,14 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
           ),
         ),
         SizedBox(width: 12.w),
+
+        // 2. Enjoyment
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Necessity",
+                "Enjoyment",
                 style: TextStyle(
                   fontFamily: 'Roboto Flex',
                   fontSize: 12.sp,
@@ -237,24 +205,24 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
               ),
               SizedBox(height: 8.h),
               CompositedTransformTarget(
-                link: _necessityLayerLink,
+                link: _enjoymentLayerLink,
                 child: _sliderContainer(
-                  label: _currentNecessityLabel,
-                  bgColor: const Color(0xFFE0E0E0), // Grey ish for Necessity
-                  textColor: const Color(0xFF616161),
+                  label: _currentEnjoymentLabel,
+                  bgColor: const Color(0xFFFFE0D6),
+                  textColor: const Color(0xFFFF6F42),
                   onTap: () {
                     _showSliderOverlay(
-                      layerLink: _necessityLayerLink,
-                      value: _necessityValue,
-                      activeColor: const Color(0xFF616161),
-                      inactiveColor: const Color(0xFFE0E0E0),
+                      layerLink: _enjoymentLayerLink,
+                      value: _enjoymentValue,
+                      activeColor: const Color(0xFFFF6F42),
+                      inactiveColor: const Color(0xFFFFE0D6),
                       onChanged: (val) {
                         setState(() {
-                          _necessityValue = val;
+                          _enjoymentValue = val;
                         });
                       },
-                      targetAnchor: Alignment.bottomRight,
-                      followerAnchor: Alignment.topRight,
+                      targetAnchor: Alignment.bottomCenter,
+                      followerAnchor: Alignment.topCenter,
                     );
                   },
                 ),
@@ -262,6 +230,54 @@ class _EnjoymentPurposeSlidersState extends State<EnjoymentPurposeSliders> {
             ],
           ),
         ),
+
+        // 3. Necessity (Conditionally visible)
+        if (widget.showNecessity) ...[
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Necessity",
+                  style: TextStyle(
+                    fontFamily: 'Roboto Flex',
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                CompositedTransformTarget(
+                  link: _necessityLayerLink,
+                  child: _sliderContainer(
+                    label: _currentNecessityLabel,
+                    bgColor: const Color(0xFFE0E0E0),
+                    textColor: const Color(0xFF616161),
+                    onTap: () {
+                      _showSliderOverlay(
+                        layerLink: _necessityLayerLink,
+                        value: _necessityValue,
+                        activeColor: const Color(0xFF616161),
+                        inactiveColor: const Color(0xFFE0E0E0),
+                        onChanged: (val) {
+                          setState(() {
+                            _necessityValue = val;
+                          });
+                        },
+                        targetAnchor: Alignment.bottomRight,
+                        followerAnchor: Alignment.topRight,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ] else ...[
+          // Placeholder to keep spacing or just empty if we want 2 items to take full width?
+          // Expanded usually expands. If we just don't include it, the first two expand to fill.
+          // That seems correct behavior.
+        ],
       ],
     );
   }

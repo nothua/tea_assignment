@@ -5,11 +5,13 @@ import 'package:tea_assignment/features/add_task/widgets/status_selector.dart';
 class HeaderSection extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
+  final bool showStatusSelector;
 
   const HeaderSection({
     super.key,
     this.hintText = "Name your task",
     this.controller,
+    this.showStatusSelector = true,
   });
 
   @override
@@ -47,8 +49,10 @@ class HeaderSection extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 8.w),
-        StatusSelector(onStatusChanged: (status) {}),
+        if (showStatusSelector) ...[
+          SizedBox(width: 8.w),
+          StatusSelector(onStatusChanged: (status) {}),
+        ],
       ],
     );
   }
